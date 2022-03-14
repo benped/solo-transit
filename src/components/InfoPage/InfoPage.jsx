@@ -1,7 +1,9 @@
-import React from 'react';
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+
+import RouteItem from "../RouteItem/RouteItem";
 
 // This is one of our simplest components
 // It doesn't have local state
@@ -12,25 +14,28 @@ function InfoPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const routes = useSelector((store) => store.routeReducer);
 
   useEffect(() => {
     console.log("in useEffect");
-    dispatch({type:"FETCH_ROUTES"})
+    dispatch({ type: "FETCH_ROUTES" });
   }, []);
 
-
-
-
-
-const routeHandler = () => {
-  
-}
+  console.log(routes[0]);
+  // array 9 - 45
+  //  let busArr = routes.data;
+  let newBusArr = routes.slice(9, 36);
+  console.log(newBusArr);
 
   return (
     <div className="container">
       <p>Info Page</p>
-      
-      <button onClick={routeHandler}>SetRoute</button>
+
+      {newBusArr.map((route, index) => {
+        return <RouteItem route={route} key={index} />;
+      })}
+
+      <button>SetRoute</button>
     </div>
   );
 }

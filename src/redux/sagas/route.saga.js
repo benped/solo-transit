@@ -10,7 +10,7 @@ function* fetchRoutes() {
     // now that the session has given us a route object
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
-    yield put({ type: 'SET_ROUTES', payload: response });
+    yield put({ type: 'SET_ROUTES', payload: response.data });
 
   } catch (error) {
     console.log('Route get request failed', error);

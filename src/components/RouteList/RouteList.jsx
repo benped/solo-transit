@@ -12,12 +12,12 @@ function RouteList({ routes }) {
   let newBusArr = routes.slice(9, 36);
 
   const nextClicked = () => {
-
     history.push("/info/directions");
   };
 
   return (
     <>
+
       <h1>Selected Route: {userPref.route}</h1>
       {newBusArr.map((route, index) => {
         return <RouteItem route={route} key={index} />;

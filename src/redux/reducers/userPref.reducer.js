@@ -1,5 +1,5 @@
 const userPrefReducer = (
-  state = { route: "", direction: "", stop: "" },
+  state = { route: "", direction: "", stop: "", time:"" },
   action
 ) => {
   switch (action.type) {
@@ -10,12 +10,13 @@ const userPrefReducer = (
     case "GET_STOPS":
       return {
         ...state,
-        direction: String(action.payload.direction),
+        direction: action.payload.direction,
         route: String(action.payload.route),
       };
     // NEED TO INSERT STOP case
     case "SET_STOP_PREF":
       return { ...state, stop: action.payload };
+    case "SET_NOFITY_TIME":
     default:
       return state;
   }

@@ -14,7 +14,7 @@ import RouteList from "../RouteList/RouteList";
 
 import Directions from "../Directions/Directions";
 import Stops from "../Stops/Stops";
-
+import Summary from "../Summary/Summary";
 import stopSaga from "../../redux/sagas/stops.saga";
 
 function InfoPage() {
@@ -35,9 +35,10 @@ function InfoPage() {
 
   return (
     <div>
+          <p>Info Page</p>
+
       <Router>
         <div className="container">
-          <p>Info Page</p>
 
           <Route path="/info/" exact>
             <RouteList routes={routes} />
@@ -51,11 +52,10 @@ function InfoPage() {
             <Stops />
           </Route>
 
-          {/* <form>
-            <label for="appt">Select a time:</label>
-            <input type="time" id="appt" name="appt" />
-            <input type="submit" />
-          </form> */}
+          <Route path="/info/summary">
+            <Summary />
+          </Route>
+
         </div>
       </Router>
     </div>

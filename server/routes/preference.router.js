@@ -24,11 +24,11 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   // POST route code here
   console.log("inside post router. req.body is", req.body);
-  const { route, direction, stop, time } = req.body;
+  const { route_id, direction_id, direction_name, place_code, description, time } = req.body;
 
-  let queryText = `INSERT INTO "user_preferences" ("user_id","route_id","direction","place_code","time") 
-VALUES ($1,$2,$3,$4,$5);`;
-  let queryInsert = [req.user.id, route, direction, stop, time];
+  let queryText = `INSERT INTO "user_preferences" ("user_id","route_id","direction_id","direction_name","place_code","description","time") 
+VALUES ($1,$2,$3,$4,$5,$6,$7);`;
+  let queryInsert = [req.user.id, route_id, direction_id, direction_name, place_code, description, time];
   console.log("query Insert is", queryInsert);
   pool
     .query(queryText, queryInsert)

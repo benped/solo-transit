@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
-
+  const routes = useSelector((store) => store.userRoutes);
   
   const dispatch = useDispatch();
 
@@ -17,12 +17,6 @@ function UserPage() {
   }, [dispatch]);
 
 
-
-
-
-
-
-
   return (
     <>
 
@@ -30,7 +24,7 @@ function UserPage() {
     <div className="container">
       <h2>Welcome, {user.username}!</h2>
       <p>Your ID is: {user.id}</p>
-
+      
       {/* <LogOutButton className="btn" /> */}
       
     </div>

@@ -5,6 +5,7 @@ import routeReducer from './route.reducer';
 import userPrefReducer from './userPref.reducer';
 import directionReducer from './direction.reducer';
 import stopReducer from './stop.reducer';
+import userRoutesReducer from './userRoutes.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   userPrefReducer,
   directionReducer,
   stopReducer,
+  userRoutesReducer,
 });
 
 export default rootReducer;

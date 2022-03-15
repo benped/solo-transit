@@ -7,7 +7,8 @@ function* getPref() {
     const response = yield axios.get("/api/preference/");
 
     console.log("response from server is", response);
-    
+    yield put({type: "SET_USER_ROUTES", payload: response})
+
   } catch (error) {
     console.log("post request failed", error);
   }

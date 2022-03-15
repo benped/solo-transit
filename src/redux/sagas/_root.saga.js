@@ -4,6 +4,7 @@ import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import routeSaga from './route.saga';
 import directionSaga from './direction.saga';
+import stopSaga from './stops.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -19,5 +20,6 @@ export default function* rootSaga() {
     userSaga(),
     routeSaga(),
     directionSaga(),
+    stopSaga(),
   ]);
 }

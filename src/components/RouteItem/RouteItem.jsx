@@ -8,7 +8,7 @@ function RouteItem({ route, i }) {
 
     const selectRoute = () => {
         // dispatch to temporarily set route. Confirm route will trigger the next call
-        dispatch({type:'SET_ROUTE',payload:route.route_id});
+        dispatch({type:"GET_DIRECTION",payload:route.route_id});
         
     }
 

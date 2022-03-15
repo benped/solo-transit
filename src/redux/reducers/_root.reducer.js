@@ -4,6 +4,8 @@ import user from './user.reducer';
 import routeReducer from './route.reducer';
 import userPrefReducer from './userPref.reducer';
 import directionReducer from './direction.reducer';
+import stopReducer from './stop.reducer';
+
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -16,6 +18,7 @@ const rootReducer = combineReducers({
   routeReducer, 
   userPrefReducer,
   directionReducer,
+  stopReducer,
 });
 
 export default rootReducer;

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 
-function Directions(){
+function Directions({route}){
 
     const dispatch = useDispatch();
     const direction = useSelector((store) => store.directionReducer);
@@ -10,7 +10,7 @@ function Directions(){
 
     const getStops = (direction) => {
         console.log('inside getStops');
-        dispatch({type:"GET_STOPS", payload:direction})
+        dispatch({type:"GET_STOPS", payload : {direction:direction, route: route}})
     }
 
     return (

@@ -5,7 +5,9 @@ import { useState, useEffect } from "react";
 
 import RouteItem from "../RouteItem/RouteItem";
 import Directions from "../Directions/Directions";
+import Stops from "../Stops/Stops";
 
+import stopSaga from "../../redux/sagas/stops.saga";
 
 function InfoPage() {
   const dispatch = useDispatch();
@@ -14,6 +16,7 @@ function InfoPage() {
   const routes = useSelector((store) => store.routeReducer);
   const selectedRoute = useSelector((store) => store.userPrefReducer);
   const direction = useSelector((store) => store.directionReducer);
+  const stops = useSelector((store) => store.stopReducer);
 
   useEffect(() => {
     console.log("in useEffect");
@@ -23,11 +26,11 @@ function InfoPage() {
   let newBusArr = routes.slice(9, 36);
   // console.log(newBusArr);
 
-  const getDirection = () => {
-    console.log(selectedRoute);
-    dispatch({ type: "GET_DIRECTION", payload: selectedRoute.route });
-    console.log(direction);
-  };
+  // const getDirection = () => {
+  //   console.log(selectedRoute);
+  //   dispatch({ type: "GET_DIRECTION", payload: selectedRoute.route });
+  //   console.log(direction);
+  // };
 
   return (
     <div className="container">
@@ -37,18 +40,25 @@ function InfoPage() {
         return <RouteItem route={route} key={index} />;
       })}
 
-      <button onClick={getDirection}>Set Route</button>
+      {/* <button onClick={getDirection}>Set Route</button> */}
 
-     {direction.length > 0 ? <div>
+      {direction.length > 0 ? (
+        <div>
+          <h1>Direction</h1>
 
-      <h1>Direction</h1>
-      {/* {direction.map((dir, i) => {
-        <div> */}
-          <Directions/>
-        {/* </div>;
-      })} */}
-      </div>
-      : <span> </span>}
+          <Directions route={selectedRoute.route} />
+        </div>
+      ) : (
+        <span> </span>
+      )}
+  {/*  STOPS    */}
+      {stops.length > 0 ? (
+        <div>
+          <Stops />
+        </div>
+      ) : (
+        <span></span>
+      )}
     </div>
   );
 }

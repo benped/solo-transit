@@ -13,7 +13,7 @@ function* fetchDirections(action) {
   
   
   try {
-    console.log('action.payload is', action.payload);
+    console.log('inside fetchDirections', action.payload);
     
     // Pings METRO transit API for directions for given route stored in userPrefReducer
     const response = yield axios.get(`https://svc.metrotransit.org/nextripv2/directions/${action.payload}`);

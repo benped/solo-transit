@@ -6,8 +6,9 @@ function* fetchStops(action) {
 
   try {
     const route = action.payload.route;
-    const direction = action.payload.direction;
-
+    const direction = action.payload.direction.direction_id;
+    console.log('direction is: ', direction);
+    
     const response = yield axios.get(`https://svc.metrotransit.org/nextripv2/stops/${route}/${direction}`);
     console.log('response from server is,', response);
     

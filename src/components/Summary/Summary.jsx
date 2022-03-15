@@ -21,7 +21,7 @@ function Stops() {
 
     console.log("inside confirm", notify.value);
     dispatch({type:"CONFIRM_NEW_PREF", payload: {route:route, direction:direction.direction_id, stop:stop.place_code, time:notify.value}})
-    // history.push("/");
+    history.push("/");
   };
 
   // place_code

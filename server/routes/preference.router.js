@@ -6,7 +6,16 @@ const router = express.Router();
  * GET route template
  */
 router.get("/", (req, res) => {
-  // GET route code here
+  let queryText = `SELECT * FROM "user_preferences" WHERE "user_id" = $1;`;
+  pool
+    .query(queryText, [req.user.id])
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log("error on get", err);
+      res.sendStatus(500);
+    });
 });
 
 /**

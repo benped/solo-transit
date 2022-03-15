@@ -1,22 +1,36 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function Directions({route}){
 
     const dispatch = useDispatch();
     const direction = useSelector((store) => store.directionReducer);
+    const history = useHistory();
 
-
-    // console.log('Inside directions: direction is:', direction);
+    console.log('Inside directions: direction is:', direction);
 
     const getStops = (direction) => {
         console.log('inside getStops');
         dispatch({type:"GET_STOPS", payload : {direction:direction, route: route}})
     }
 
+    const backButton = () => {
+        history.push('/info')
+    }
+
+    const nextButton = () => {
+        history.push('/info/stops')
+    }
+
     return (
         <>
+        <h1>Direction</h1>
         <button onClick={(event) => getStops(event.target.value)} value={direction[0].direction_id}>{direction[0].direction_name}</button>
         <button onClick={(event) => getStops(event.target.value)} value={direction[1].direction_id}>{direction[1].direction_name}</button>
+        <div>
+            <button onClick={backButton}>Back</button>
+            <button onClick={nextButton}>Next</button>
+        </div>
         </>
     )
 }

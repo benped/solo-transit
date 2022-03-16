@@ -16,7 +16,7 @@ function* fetchArrivals(action) {
     const response = yield axios.get(`https://svc.metrotransit.org/nextripv2/${action.payload.stop_id}`);
     console.log('response is', response);
     
-    yield put({ type: 'HOLD_ARRIVALS', payload: {arrivals: response.data, index: action.payload.index });
+    yield put({ type: 'HOLD_ARRIVALS', payload: {arrivals: response.data, index: action.payload.index }});
 
   } catch (error) {
     console.log('Route arrivals get request failed', error);

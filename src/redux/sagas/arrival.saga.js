@@ -1,30 +1,39 @@
-import axios from 'axios';
-import { put, takeLatest, select } from 'redux-saga/effects';
+import axios from "axios";
+import { put, takeLatest, select } from "redux-saga/effects";
 
-import {useSelector} from 'react-redux';
-import userPrefReducer from '../reducers/userPref.reducer';
+import { useSelector } from "react-redux";
+import userPrefReducer from "../reducers/userPref.reducer";
 
-// worker Saga: will be fired on "FETCH_DIRECTIONS" actions
+// worker Saga: will be fired on 'GET_SOONEST_ARRIVAL' actions
 function* fetchArrivals(action) {
-  
+  console.log("inside fetcharrivals, payload is", action.payload);
 
-  
   try {
-    console.log('inside fetchArrivals', action.payload);
-    
-    // Pings METRO transit API for directions for given route stored in userPrefReducer
-    const response = yield axios.get(`https://svc.metrotransit.org/nextripv2/${action.payload.stop_id}`);
-    console.log('response is', response);
-    
-    yield put({ type: 'HOLD_ARRIVALS', payload: {arrivals: response.data, index: action.payload.index }});
+    console.log("inside try fetchArrivals", action.payload);
 
+    let allArrivals = [];
+    for (let arrival of action.payload) {
+      const response = yield axios.get(
+        `https://svc.metrotransit.org/nextripv2/${arrival.stop_id}`
+      );
+      console.log("response from nextripv2 is", response);
+      allArrivals.push({
+        departure: response.data.departures[0].departure_text,
+        preference_id: arrival.preference_id,
+      });
+    }
+    // Pings METRO transit API
+
+    console.log("allArrivals is", allArrivals);
+
+    yield put({ type: "HOLD_ARRIVALS", payload: allArrivals });
   } catch (error) {
-    console.log('Route arrivals get request failed', error);
+    console.log("Route arrivals get request failed", error);
   }
 }
 
 function* arrivalSaga() {
-  yield takeLatest('GET_DIRECTION', fetchArrivals);
+  yield takeLatest("GET_SOONEST_ARRIVAL", fetchArrivals);
 }
 
 export default arrivalSaga;

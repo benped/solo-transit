@@ -19,6 +19,13 @@ router.get("/", (req, res) => {
     });
 });
 
+
+// Get with time tables 
+router.post('/time/', (req, res) => {
+  console.log('req.body is',req.body);
+  
+});
+
 /**
  * POST route template
  */

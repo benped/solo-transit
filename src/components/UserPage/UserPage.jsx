@@ -7,7 +7,8 @@ import UserPref from "../UserPref/UserPref.jsx";
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
-  const routes = useSelector((store) => store.userRoutesReducer);
+  const userRoutes = useSelector((store) => store.userRoutesReducer);
+  const arrivals = useSelector((store) => store.arrivalsReducer);
 
   const dispatch = useDispatch();
 
@@ -15,22 +16,29 @@ function UserPage() {
 
   useEffect(() => {
     dispatch({ type: "FETCH_USER_PREF" });
-  }, []);
+    
+    
+  }, [dispatch]);
 
-  console.log(routes);
 
+  // console.log();
+  
   return (
     <>
       <div className="container">
         <h2>Welcome, {user.username}!</h2>
-        <p>Your ID is: {user.id}</p>       
+        <p>Your ID is: {user.id}</p>
         {/* Ternary needs to be here to wait for async to catch up */}
-        {routes.length > 0 ? 
+        {userRoutes.length > 0 ? (
           <div>
             {routes.map((route, i) => {
-              return( <UserPref route={route} key={i} />)
+
+              return <UserPref route={route} key={i} />;
             })}
-          </div> : <span>poop</span> }
+          </div>
+        ) : (
+          <span>poop</span>
+        )}
 
         {/* {/* <LogOutButton className="btn" /> */}
       </div>

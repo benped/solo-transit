@@ -9,12 +9,12 @@ function Directions() {
   const userPref = useSelector((store) => store.userPrefReducer);
 
   console.log("Inside directions: directions are:", direction);
-
+console.log("user pref is ", userPref);
   const getStops = (id) => {
     console.log("inside getStops dirction is:", direction[id]);
     dispatch({
       type: "GET_STOPS",
-      payload: { direction: direction[id], route: route },
+      payload: { direction: direction[id], route: route},
     });
   };
 

@@ -4,14 +4,14 @@ const userPrefReducer = (
 ) => {
   switch (action.type) {
     case "GET_DIRECTION":
-      return { ...state, route: String(action.payload) };
+      return { ...state, route: action.payload };
     // GET STOPS runs to get stops with the direction information
     // The payload is the direction here.
     case "GET_STOPS":
       return {
         ...state,
         direction: action.payload.direction,
-        route: String(action.payload.route),
+        route: action.payload.route,
       };
     // NEED TO INSERT STOP case
     case "SET_STOP_PREF":

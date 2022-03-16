@@ -24,6 +24,7 @@ function Stops() {
       type: "CONFIRM_NEW_PREF",
       payload: {
         route_id: route,
+        // route_label: route.route_label,
         direction_id: direction.direction_id,
         direction_name: direction.direction_name,
         place_code: stop.place_code,

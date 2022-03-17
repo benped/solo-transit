@@ -22,23 +22,18 @@ function UserPage() {
 
 
   // console.log();
-  
+
   return (
     <>
       <div className="container">
         <h2>Welcome, {user.username}!</h2>
         <p>Your ID is: {user.id}</p>
-        {/* Ternary needs to be here to wait for async to catch up */}
-        {userRoutes.length > 0 ? (
-          <div>
-            {routes.map((route, i) => {
 
+            {userRoutes.map((route, i) => {
               return <UserPref route={route} key={i} />;
             })}
-          </div>
-        ) : (
-          <span>poop</span>
-        )}
+         
+ 
 
         {/* {/* <LogOutButton className="btn" /> */}
       </div>

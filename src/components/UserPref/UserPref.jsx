@@ -2,43 +2,44 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+const { default: axios } = require("axios");
 
 function UserPref({ route }) {
   const dispatch = useDispatch();
-  const arrivals = useSelector((store) => store.arrivalsReducer);
-
-  console.log("arrivals are", arrivals);
+  const [arrival, setArrival] = useState("");
 
   useEffect(() => {
-    // Trying out something new, doing a loop in the saga to get all arrivals before sending to reducer
-    // dispatch({ type: 'GET_SOONEST_ARRIVAL', payload:{stop_id:route.stop_id,index:route.preference_id}});
-    dispatch({ type: "GET_SOONEST_ARRIVAL", payload: route });
-    
-
+    onLoad();
   }, []);
 
   let departure = "";
 
-  const onLoad = (arrivals) => {
+  // onLoad this makes a get request to grab the next arrival from the metro transit API
+  const onLoad = async () => {
+    try {
+      let response = await axios.get(
+        `https://svc.metrotransit.org/nextripv2/${route.stop_id}`
+      );
 
-    for (let i = 0; i < arrivals.length; i++) {
-      console.log("inside hold arrivals for loop");
-      
-      if (arrivals[i].preference_id === route.preference_id) {
-        console.log("inside if statement for hold arrivals reducer");
-        
-        departure = arrivals[i].departure;
-      }
+      departure = response.data.departures[0].departure_text;
+      console.log("Inside user pref departure data", departure);
+      setArrival(departure);
+    } catch {
+      console.log("error on axios get");
     }
+  };
+
+  const UserPrefDetail = () => {
+    history.push(`/detail/${}`); // back to list
   }
 
   return (
     <>
-      <div>
+      <div onClick={UserPrefDetail}>
         <h2>{route.route_id}</h2>
+        <p>Arriving: {arrival}</p>
         <h3>{route.description}</h3>
         <h3></h3>
-        <p>{departure}</p>
       </div>
     </>
   );

@@ -11,9 +11,9 @@ function* getPref() {
     const response = yield axios.get("/api/preference/");
 
     console.log("response from server is", response);
-    yield axios.post("/api/preference/time", response.data);
+    // yield axios.post("/api/preference/time", response.data);
 
-    // yield put({type: "SET_USER_ROUTES", payload: response.data})
+    yield put({type: "SET_USER_ROUTES", payload: response.data})
 
   } catch (error) {
     console.log("post request failed", error);

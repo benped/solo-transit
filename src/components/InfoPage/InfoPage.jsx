@@ -29,6 +29,7 @@ function InfoPage() {
   useEffect(() => {
     console.log("in useEffect");
     dispatch({ type: "FETCH_ROUTES" });
+    
   }, []);
 
   // console.log(newBusArr);

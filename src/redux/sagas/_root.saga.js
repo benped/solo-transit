@@ -6,6 +6,8 @@ import routeSaga from './route.saga';
 import directionSaga from './direction.saga';
 import stopSaga from './stops.saga';
 import confirmSaga from './confirm.saga';
+import userPrefSaga from './userPref.saga';
+import arrivalSaga from './arrival.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -23,5 +25,7 @@ export default function* rootSaga() {
     directionSaga(),
     stopSaga(),
     confirmSaga(),
+    userPrefSaga(),
+    arrivalSaga(),
   ]);
 }

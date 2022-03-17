@@ -7,7 +7,7 @@ function Stops() {
   const userPref = useSelector((store) => store.userPrefReducer);
   const history = useHistory();
 
-  const {route, direction, stop } = userPref;
+  const { route, direction, stop } = userPref;
 
   const backButton = () => {
     history.push("/info/stops");
@@ -20,8 +20,19 @@ function Stops() {
     }
 
     console.log("inside confirm", notify.value);
-    dispatch({type:"CONFIRM_NEW_PREF", payload: {route:route, direction:direction.direction_id, stop:stop.place_code, time:notify.value}})
-    // history.push("/");
+    dispatch({
+      type: "CONFIRM_NEW_PREF",
+      payload: {
+        route_id: route,
+        // route_label: route.route_label,
+        direction_id: direction.direction_id,
+        direction_name: direction.direction_name,
+        place_code: stop.place_code,
+        description: stop.description,
+        time: notify.value,
+      },
+    });
+    history.push("/");
   };
 
   // place_code

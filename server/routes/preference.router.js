@@ -19,12 +19,18 @@ router.get("/", (req, res) => {
     });
 });
 
-//  OLD CODE, DELETE LATER
-// Get with time tables 
-// router.post('/time/', (req, res) => {
-//   console.log('req.body is',req.body);
-  
-// });
+router.get("/details/:id", (req, res) => {
+  let queryText = `SELECT * FROM "user_preferences" WHERE "preference_id" = $1;`;
+  pool
+    .query(queryText, [req.params.id])
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log("Error on get details", err);
+      res.sendStatus(500);
+    });
+});
 
 /**
  * POST route template

@@ -20,6 +20,7 @@ function DetailEdit({ setEdit }) {
 
   useEffect(() => {
     getRoutes();
+    setRoute(detail.route_id);
   }, []);
 
   console.log("Detail is", detail);
@@ -34,27 +35,32 @@ function DetailEdit({ setEdit }) {
       );
       console.log(response.data);
       setRouteList(response.data);
-      getDirections();
+      getDirections(detail.route_id);
     } catch {
       console.log("error on axios get");
     }
   };
 
-  const getDirections = async () => {
+  const getDirections = async (inputRoute) => {
     try {
-      const response = await axios.get(
-        `https://svc.metrotransit.org/nextripv2/directions/${route}`
+        // console.log('about to setRoute to', inputRoute);
+        // setRoute(inputRoute);
+        console.log('inside Get directions with route:',route);
+        const response = await axios.get(
+        `https://svc.metrotransit.org/nextripv2/directions/${inputRoute}`
       );
       console.log("firing getDirections");
       console.log(response.data);
       setDirectionList(response.data);
-      getStops();
+    //   setDirection(response.data[0].direction_name)
+    //   setDirectionID(response.data[0].direction_id)
+      getStops(0);
     } catch {
       console.log("error on directions get");
     }
   };
 
-  const getStops = async () => {
+  const getStops = async (directionID) => {
     try {
       await console.log("direction id is", direction);
 
@@ -85,21 +91,25 @@ function DetailEdit({ setEdit }) {
 
   const directionChange = () => {
     getStops();
-    setStop("");
+    // setStop("");
   };
+
+  const routeChange = (value) => {
+      getDirections(value);
+  }
 
   return (
     <div>
       <h1> Edit </h1>
       {/* <input  value={} /> */}
       <select
-        value={route}
+        // value={route}
         onChange={(event) => {
-          setRoute(event.target.value);
+        //   setRoute(event.target.value);
           console.log(event.target.value);
           setDirection("");
-          setStop("");
-          getDirections();
+        //   getDirections();
+          routeChange(event.target.value);
         }}
       >
         {routeList.length > 0 &&
@@ -112,7 +122,7 @@ function DetailEdit({ setEdit }) {
 
       {/* DIRECTION REDUCER AND DROPDOWN */}
       <select
-        value={route.direction_name}
+        // value={route}
         onChange={(event) => {
           //   event.preventDefault();
           directionChange(event);
@@ -122,7 +132,7 @@ function DetailEdit({ setEdit }) {
         }}
       >
         {directionList.map((dir, i) =>
-          dir.direction_id == detail.direction_id ? (
+          dir.direction_id === detail.direction_id ? (
             <option selected value={dir.direction_id}>
               {dir.direction_name}
             </option>

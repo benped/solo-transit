@@ -13,7 +13,7 @@ function DetailEdit({ setEdit }) {
   const [directionList, setDirectionList] = useState([]);
   const [direction, setDirection] = useState(detail.direction_name);
   const [directionID, setDirectionID] = useState(detail.direction_id);
-  
+
   const [stopList, setStopList] = useState([]);
   const [stop, setStop] = useState(detail.description);
 
@@ -52,24 +52,27 @@ function DetailEdit({ setEdit }) {
   };
 
 
-//   const getStops = async () => {
-//     try {
-//       await console.log("direction id is", direction);
-//       const num = direction.slice(-1);
-//       console.log(num);
-//       const response = axios.get(
-//         `https://svc.metrotransit.org/nextripv2/stops/${route}/${num}`
-//       );
-//       console.log(response.data);
-//       setStopList(response.data);
-//     } catch {
-//       console.log("error on stops get");
-//     }
-//   };
+  const getStops = async () => {
+    try {
+      await console.log("direction id is", direction);
+
+      const response = axios.get(
+        `https://svc.metrotransit.org/nextripv2/stops/${route}/${directionID}`
+      );
+      console.log(response.data);
+      setStopList(response.data);
+    } catch {
+      console.log("error on stops get");
+    }
+  };
 
   const directionChange =  (event) => {
-    setDirectionID(event.target.id);
-    setDirection(event.target.value);
+    let value = event.target.value;
+    console.log(event.target);
+    let num = value.slice(-1);
+    let directionSlice = value.slice(0,value.length-2)
+    setDirectionID(num);  
+    setDirection(directionSlice)
     getStops();
     setStop("");
   };
@@ -82,6 +85,7 @@ function DetailEdit({ setEdit }) {
         value={route}
         onChange={(event) => {
           setRoute(event.target.value);
+          console.log(event.target.value);
           setDirection("");
           setStop("");
           getDirections();
@@ -107,7 +111,7 @@ function DetailEdit({ setEdit }) {
       >
         
         {  directionList.map((dir, i) => (
-            <option id={i} value={[dir.direction_name, dir.direction_id]}>
+            <option  id={i} value={[dir.direction_name, dir.direction_id]}>
               {dir.direction_name}
             </option>
           ))}
@@ -122,10 +126,10 @@ function DetailEdit({ setEdit }) {
           setStop(event.target.value);
         }}
       >
-        {stopList.length > 0 &&
+        {stopList > 0 &&
           stopList.map((place, i) => (
             <option id={place.place_code} value={stop.description}>
-              {stop.description}
+              {place.description}
             </option>
           ))}
       </select>

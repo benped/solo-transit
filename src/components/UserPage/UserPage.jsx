@@ -3,6 +3,7 @@ import LogOutButton from "../LogOutButton/LogOutButton";
 import { useDispatch, useSelector } from "react-redux";
 
 import UserPref from "../UserPref/UserPref.jsx";
+import "../UserPref/UserPref.css"
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM

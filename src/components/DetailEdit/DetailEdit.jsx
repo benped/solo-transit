@@ -9,15 +9,18 @@ function DetailEdit({ setEdit }) {
   const arrival = useSelector((store) => store.arrivalReducer);
   const [routeList, setRouteList] = useState([]);
   const [route, setRoute] = useState(detail.route_id);
+
   const [directionList, setDirectionList] = useState([]);
-  const [direction, setDirection] = useState(detail.direction_name,detail.direction_id);
-  const [directionID, setDirectionID] = useState();
+  const [direction, setDirection] = useState(detail.direction_name);
+  const [directionID, setDirectionID] = useState(detail.direction_id);
+  
   const [stopList, setStopList] = useState([]);
   const [stop, setStop] = useState(detail.description);
 
   useEffect(() => {
     getRoutes();
   }, []);
+
   console.log("Detail is", detail);
   console.log("DirectionList is", directionList);
   console.log("Direction is ID", directionID);
@@ -48,23 +51,24 @@ function DetailEdit({ setEdit }) {
     }
   };
 
-  const getStops = () => {
-    try {
-      console.log("direction id is", direction);
-      const last = direction.charAt(direction.length - 1);
-      console.log("last is", last);
-      const response = axios.get(
-        `https://svc.metrotransit.org/nextripv2/stops/${route}/${last}`
-      );
-      console.log(response.data);
-      setStopList(response.data);
-    } catch {
-      console.log("error on stops get");
-    }
-  };
 
-  const directionChange = (event) => {
-    // setDirectionID(event.target.id);
+//   const getStops = async () => {
+//     try {
+//       await console.log("direction id is", direction);
+//       const num = direction.slice(-1);
+//       console.log(num);
+//       const response = axios.get(
+//         `https://svc.metrotransit.org/nextripv2/stops/${route}/${num}`
+//       );
+//       console.log(response.data);
+//       setStopList(response.data);
+//     } catch {
+//       console.log("error on stops get");
+//     }
+//   };
+
+  const directionChange =  (event) => {
+    setDirectionID(event.target.id);
     setDirection(event.target.value);
     getStops();
     setStop("");
@@ -96,16 +100,18 @@ function DetailEdit({ setEdit }) {
         value={direction}
         id={directionID}
         onChange={(event) => {
+          event.preventDefault();
           directionChange(event);
-          console.log("on click directionID", event.target.key);
+          console.log("on click directionID", event.target.id);
         }}
       >
-        {directionList.length > 0 &&
-          directionList.map((dir, i) => (
+        
+        {  directionList.map((dir, i) => (
             <option id={i} value={[dir.direction_name, dir.direction_id]}>
               {dir.direction_name}
             </option>
           ))}
+        
       </select>
 
       {/* STOPSSSSSSS */}

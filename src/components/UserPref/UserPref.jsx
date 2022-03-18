@@ -7,7 +7,8 @@ const { default: axios } = require("axios");
 function UserPref({ route }) {
   const dispatch = useDispatch();
   const [arrival, setArrival] = useState("");
-
+  const history = useHistory();
+  
   useEffect(() => {
     onLoad();
   }, []);
@@ -30,7 +31,7 @@ function UserPref({ route }) {
   };
 
   const UserPrefDetail = () => {
-    history.push(`/detail/${}`); // back to list
+    history.push(`/detail/${route.preference_id}`); // back to list
   }
 
   return (

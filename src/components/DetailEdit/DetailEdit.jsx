@@ -13,7 +13,7 @@ function DetailEdit({ setEdit }) {
   const [directionList, setDirectionList] = useState([]);
   const [direction, setDirection] = useState(detail.direction_name);
   const [directionValue, setDirectionValue] =useState(detail.direction_id);
-
+  const [directionPassThrough, setDirectionPassThrough] = useState({direction_id:detail.direction_id, direction_name:detail.direction_name})
   const [directionID, setDirectionID] = useState(detail.direction_id);
 
   const [stopList, setStopList] = useState([]);
@@ -79,8 +79,9 @@ function DetailEdit({ setEdit }) {
       console.log(response.data);
       setDirectionList(response.data);
       // set direction value to 0, this is id, can't change
-      setDirectionValue(0)
-      //   setDirection(response.data[0].direction_name)
+    //   setDirectionValue(0)
+        setDirection(response.data[0].direction_name)
+        setDirectionPassThrough(response.data[0])
       //   setDirectionID(response.data[0].direction_id)
       getStops(inputRoute, 0);
     } catch {
@@ -137,6 +138,7 @@ function DetailEdit({ setEdit }) {
     console.log("Direction is ID", directionID);
     console.log("Direction is", direction);
     console.log('stop value is', stopValue);
+    console.log('Direction Pass Through is', directionPassThrough);
   }
 
   return (
@@ -152,6 +154,8 @@ function DetailEdit({ setEdit }) {
           //   getDirections();
           routeChange(event.target.value);
           setRoute(event.target.value)
+          
+          
         }}
       >
         {routeList.length > 0 &&
@@ -170,6 +174,7 @@ function DetailEdit({ setEdit }) {
 
       {/* DIRECTION REDUCER AND DROPDOWN */}
       <select
+      placeholder="Direction"
         value={directionValue}
         onChange={(event) => {
           //   event.preventDefault();
@@ -181,7 +186,7 @@ function DetailEdit({ setEdit }) {
         }}
       >
         {directionList.map((dir, i) =>
-          dir.direction_id === detail.direction_id ? (
+          dir.direction_name === detail.direction_name ? (
             <option selected value={dir.direction_id}>
               {dir.direction_name}
             </option>

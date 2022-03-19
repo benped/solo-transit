@@ -5,6 +5,8 @@ import { useHistory, useParams } from "react-router-dom";
 function Stops() {
   const dispatch = useDispatch();
   const userPref = useSelector((store) => store.userPrefReducer);
+  const summary = useSelector((store) => store.summaryReducer);
+
   const history = useHistory();
 
   const { route, direction, stop } = userPref;
@@ -53,9 +55,9 @@ function Stops() {
     <>
       <h1>Summary</h1>
 
-      <p>Route: {userPref.route}</p>
-      <p>Direction: {userPref.direction.direction_name}</p>
-      <p>Stop: {userPref.stop.description}</p>
+      <p>{summary.route_label}</p>
+      <p>Direction: {summary.direction_name}</p>
+      <p>Stop: {summary.description}</p>
 
       <label for="appt">When do you want to be notified?</label>
       <input type="time" id="notify" name="notify" defaultValue={0} />

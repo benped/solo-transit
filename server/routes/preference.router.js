@@ -32,6 +32,12 @@ router.get("/details/:id", (req, res) => {
     });
 });
 
+router.put("/", (req,res) => {
+  console.log('req.body is', req.body);
+  res.sendStatus(200);
+  
+})
+
 /**
  * POST route template
  */

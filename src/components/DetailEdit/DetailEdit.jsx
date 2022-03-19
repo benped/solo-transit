@@ -3,135 +3,95 @@ import { useDispatch, useSelector } from "react-redux";
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import MuiPhoneNumber from "material-ui-phone-number";
+import TextField from "@mui/material/TextField";
 
 function DetailEdit({ setEdit }) {
   const detail = useSelector((store) => store.detailReducer);
-  const arrival = useSelector((store) => store.arrivalReducer);
-  const [routeList, setRouteList] = useState([]);
-  const [route, setRoute] = useState(detail.route_id);
+  const [time, setTime] = useState(detail.time);
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
 
-  const [directionList, setDirectionList] = useState([]);
-  const [direction, setDirection] = useState(detail.direction_name);
-  const [directionID, setDirectionID] = useState(detail.direction_id);
-  
-  const [stopList, setStopList] = useState([]);
-  const [stop, setStop] = useState(detail.description);
+  const dispatch = useDispatch();
+  let notify_mode;
 
   useEffect(() => {
-    getRoutes();
+    // setUpFunction();
+    // getRoutes();
+    // setRoute(detail.route_id);
   }, []);
 
-  console.log("Detail is", detail);
-  console.log("DirectionList is", directionList);
-  console.log("Direction is ID", directionID);
-  console.log("Direction is", direction);
-
-  const getRoutes = async () => {
-    try {
-      const response = await axios.get(
-        "https://svc.metrotransit.org/nextripv2/routes"
-      );
-      console.log(response.data);
-      setRouteList(response.data);
-      getDirections();
-    } catch {
-      console.log("error on axios get");
+  const saveClicked = () => {
+    console.log("TIme is:", time);
+    console.log("Preference ID is", detail.preference_id);
+    if (alignment === "text") {
+      notify_mode = "text";
+    } else notify_mode = "email";
+    const payload = {
+        phone: phone,
+        email: email,
+        notify_mode: notify_mode,
+        time: time,
+        preference_id: detail.preference_id
     }
+    console.log("payload is",payload);
+    dispatch({type: "UPDATE_NOTIFICATIONS", payload: payload})
+  };
+  const [alignment, setAlignment] = useState("text");
+
+  const deliverChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
   };
 
-  const getDirections = async () => {
-    try {
-      const response = await axios.get(
-        `https://svc.metrotransit.org/nextripv2/directions/${route}`
-      );
-      console.log(response.data);
-      setDirectionList(response.data);
-    } catch {
-      console.log("error on directions get");
-    }
-  };
-
-
-//   const getStops = async () => {
-//     try {
-//       await console.log("direction id is", direction);
-//       const num = direction.slice(-1);
-//       console.log(num);
-//       const response = axios.get(
-//         `https://svc.metrotransit.org/nextripv2/stops/${route}/${num}`
-//       );
-//       console.log(response.data);
-//       setStopList(response.data);
-//     } catch {
-//       console.log("error on stops get");
-//     }
+//   const handleOnPhoneChange = (value) => {
+//     setPhone(
+//       value
+//     );
 //   };
 
-  const directionChange =  (event) => {
-    setDirectionID(event.target.id);
-    setDirection(event.target.value);
-    getStops();
-    setStop("");
-  };
+//   const handleOnEmailChange = (value) => {
+//       console.log(value);
+//       setEmail(value);
+//   };
 
   return (
     <div>
-      <h1> Edit </h1>
-      {/* <input  value={} /> */}
-      <select
-        value={route}
-        onChange={(event) => {
-          setRoute(event.target.value);
-          setDirection("");
-          setStop("");
-          getDirections();
-        }}
+      <button onClick={() => setEdit(false)}>Back</button> <h1> Edit </h1>
+      <h5>{detail.route_id}</h5>
+      <h5>{detail.description}</h5>
+      <h5>{detail.direction_name}</h5>
+      <h2>Change Notification TIme</h2>
+      {/* <p>Notify At: {detail.time}</p> */}
+      <input
+        type="time"
+        id="notify"
+        name="notify"
+        defaultValue={time}
+        onChange={(event) => setTime(event.target.value)}
+      />
+      <h2>Update Notification Delivery</h2>
+      <ToggleButtonGroup
+        color="primary"
+        value={alignment}
+        exclusive
+        onChange={deliverChange}
       >
-        {routeList.length > 0 &&
-          routeList.map((route, i) => (
-            <option id={i} value={route.route_id}>
-              {route.route_label}
-            </option>
-          ))}
-      </select>
-
-      {/* DIRECTION REDUCER AND DROPDOWN */}
-      <select
-        value={direction}
-        id={directionID}
-        onChange={(event) => {
-          event.preventDefault();
-          directionChange(event);
-          console.log("on click directionID", event.target.id);
-        }}
-      >
-        
-        {  directionList.map((dir, i) => (
-            <option id={i} value={[dir.direction_name, dir.direction_id]}>
-              {dir.direction_name}
-            </option>
-          ))}
-        
-      </select>
-
-      {/* STOPSSSSSSS */}
-
-      <select
-        value={stop}
-        onChange={(event) => {
-          setStop(event.target.value);
-        }}
-      >
-        {stopList.length > 0 &&
-          stopList.map((place, i) => (
-            <option id={place.place_code} value={stop.description}>
-              {stop.description}
-            </option>
-          ))}
-      </select>
-
-      <p>Notify At: {detail.time}</p>
-      <button onClick={() => setEdit(false)}>Back</button>
+        <ToggleButton value="text">Text</ToggleButton>
+        <ToggleButton value="email">Email</ToggleButton>
+      </ToggleButtonGroup>
+      {alignment == "text" ? (
+        <TextField
+          type="number"
+          onChange={(event) => setPhone(event.target.value)}
+        />
+      ) : (
+        <TextField id="standard-basic" label="Standard" variant="standard" value={email} onChange={(event) =>setEmail(event.target.value)}/>
+      )}
+      <button onClick={() => saveClicked()}>Save</button>
+      <h2>Delete Route Reminder</h2>
+      <button>Delete</button>
     </div>
   );
 }

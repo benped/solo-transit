@@ -20,8 +20,20 @@ function* getPref() {
   }
 }
 
+function* putNotify(payload) {
+    try {
+        const response =yield axios.put("/api/preference",payload);
+        console.log('Response is', response);
+        
+    } catch (error) {
+        console.log('Error on put', error);
+        
+    }
+}
+
 function* userPrefSaga() {
   yield takeLatest("FETCH_USER_PREF", getPref);
+  yield takeLatest("UPDATE_NOTIFICATIONS", putNotify)
 }
 
 export default userPrefSaga;

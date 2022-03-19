@@ -8,7 +8,7 @@ function UserPref({ route }) {
   const dispatch = useDispatch();
   const [arrival, setArrival] = useState("");
   const history = useHistory();
-  
+
   useEffect(() => {
     onLoad();
   }, []);
@@ -21,12 +21,12 @@ function UserPref({ route }) {
       let response = await axios.get(
         `https://svc.metrotransit.org/nextripv2/${route.stop_id}`
       );
-
+      console.log(response);
       departure = response.data.departures[0].departure_text;
       console.log("Inside user pref departure data", departure);
       setArrival(departure);
-    } catch {
-      console.log("error on axios get");
+    } catch (error) {
+      console.log("error on axios get",(error));
     }
   };
 
@@ -36,7 +36,7 @@ function UserPref({ route }) {
 
   return (
     <>
-      <div onClick={UserPrefDetail}>
+      <div className="arrivals" onClick={UserPrefDetail}>
         <h2>{route.route_id}</h2>
         <p>Arriving: {arrival}</p>
         <h3>{route.description}</h3>

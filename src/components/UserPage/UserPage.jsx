@@ -3,7 +3,7 @@ import LogOutButton from "../LogOutButton/LogOutButton";
 import { useDispatch, useSelector } from "react-redux";
 
 import UserPref from "../UserPref/UserPref.jsx";
-import "../UserPref/UserPref.css"
+import "../UserPref/UserPref.css";
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
@@ -17,10 +17,7 @@ function UserPage() {
 
   useEffect(() => {
     dispatch({ type: "FETCH_USER_PREF" });
-    
-    
   }, [dispatch]);
-
 
   // console.log();
 
@@ -28,13 +25,11 @@ function UserPage() {
     <>
       <div className="container">
         <h2>Welcome, {user.username}!</h2>
-        <p>Your ID is: {user.id}</p>
-
-            {userRoutes.map((route, i) => {
-              return <UserPref route={route} key={i} />;
-            })}
-         
- 
+        <p>Your Transit Routes:</p>
+        {/* Add in to ternary for no routes here */}
+        {userRoutes.map((route, i) => {
+          return <UserPref route={route} key={i} />;
+        })}
 
         {/* {/* <LogOutButton className="btn" /> */}
       </div>

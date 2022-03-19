@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 function Stops() {
   const dispatch = useDispatch();
@@ -8,6 +8,7 @@ function Stops() {
   const history = useHistory();
 
   const { route, direction, stop } = userPref;
+  const { routeParam, directionParam, placeCode } = useParams();
 
   const backButton = () => {
     history.push("/info/stops");

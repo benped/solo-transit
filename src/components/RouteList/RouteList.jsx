@@ -7,12 +7,12 @@ import RouteItem from "../RouteItem/RouteItem";
 function RouteList({ routes }) {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const [routeParam, setRouteParam] = useState()
   const userPref = useSelector((store) => store.userPrefReducer);
   let newBusArr = routes.slice(9, 36);
 
   const nextClicked = () => {
-    history.push("/info/directions");
+    history.push(`/info/directions/${routeParam}`);
   };
 
   return (
@@ -20,7 +20,7 @@ function RouteList({ routes }) {
 
       <h1>Selected Route: {userPref.route}</h1>
       {newBusArr.map((route, index) => {
-        return <RouteItem route={route} key={index} />;
+        return <RouteItem route={route} key={index} setRouteParam={setRouteParam}/>;
       })}
       <button onClick={nextClicked}>Next</button>
     </>

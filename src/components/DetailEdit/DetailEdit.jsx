@@ -21,6 +21,8 @@ function DetailEdit({ setEdit }) {
   const [stopValue, setStopValue] = useState(detail.description)
 
   const [defaultStop, setDefaultStop ] = useState(detail.description)
+  const [time, setTime ] = useState(detail.time)
+
 
   useEffect(() => {
     setUpFunction();
@@ -139,11 +141,13 @@ function DetailEdit({ setEdit }) {
     console.log("Direction is", direction);
     console.log('stop value is', stopValue);
     console.log('Direction Pass Through is', directionPassThrough);
+    console.log('TIme is:', time);
+
   }
 
   return (
     <div>
-      <h1> Edit </h1>
+      <button onClick={() => setEdit(false)}>Back</button> <h1> Edit </h1>
       {/* <input  value={} /> */}
       <select
         // value={route}
@@ -208,20 +212,22 @@ function DetailEdit({ setEdit }) {
         {stopList.length > 0 &&
           stopList.map((place, i) =>
             place.place_code == defaultStop ? (
-              <option selected id={place.place_code} value={place.description}>
+              <option selected id={place.place_code} value={i}>
                 {place.description}
               </option>
             ) : (
-              <option id={place.place_code} value={place.description}>
+              <option id={place.place_code} value={i}>
                 {place.description}
               </option>
             )
           )}
       </select>
-
+<h2>Change Notification TIme</h2>
       {/* <p>Notify At: {detail.time}</p> */}
-      <input type="time" id="notify" name="notify" defaultValue={detail.time} />
-      <button onClick={() => setEdit(false)}>Back</button>
+      <input type="time" id="notify" name="notify" defaultValue={time} onChange={() => setTime(event.target.value)}/>
+      
+      <h2>Update Notification Delivery</h2>
+      
       <button onClick={() => saveClicked()}>Save</button>
     </div>
   );

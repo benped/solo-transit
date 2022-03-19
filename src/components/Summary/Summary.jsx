@@ -10,6 +10,17 @@ function Stops() {
   const { route, direction, stop } = userPref;
   const { routeParam, directionParam, placeCode } = useParams();
 
+  useEffect(() => {
+    dispatch({
+      type: "GET_ALL_DATA",
+      payload: {
+        direction: directionParam,
+        route: routeParam,
+        placeCode: placeCode,
+      },
+    });
+  }, []);
+
   const backButton = () => {
     history.push("/info/stops");
   };

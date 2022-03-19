@@ -24,7 +24,7 @@ function DetailEdit({ setEdit }) {
   const [time, setTime] = useState(detail.time);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-
+  const history = useHistory();
   const dispatch = useDispatch();
   let notify_mode;
 
@@ -56,16 +56,11 @@ function DetailEdit({ setEdit }) {
     setAlignment(newAlignment);
   };
 
-  //   const handleOnPhoneChange = (value) => {
-  //     setPhone(
-  //       value
-  //     );
-  //   };
-
-  //   const handleOnEmailChange = (value) => {
-  //       console.log(value);
-  //       setEmail(value);
-  //   };
+const deleteClicked = () => {
+  console.log('Delete Clicked');
+  dispatch({type: "DELETE_ROUTE_PREF", payload: detail.preference_id});
+  history.push('/');
+}
 
   return (
     <Paper sx={{ m: 1 }} elevation={4}>
@@ -83,7 +78,14 @@ function DetailEdit({ setEdit }) {
           </Box>
         </Box>
       </Stack>
-      <h2>Change Notification TIme</h2>
+      <Box         sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+        }}>
+
+<Typography variant="h6">Change Notification Time</Typography>
       {/* <p>Notify At: {detail.time}</p> */}
       <input
         type="time"
@@ -91,17 +93,19 @@ function DetailEdit({ setEdit }) {
         name="notify"
         defaultValue={time}
         onChange={(event) => setTime(event.target.value)}
-      />
+        />
+        </Box>
 
-      <h2>Update Notification Delivery</h2>
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           flexDirection: "column",
           alignItems: "center",
+          marginTop: 5
         }}
       >
+        <Typography variant="h6">Update Notification Delivery</Typography>
         <ToggleButtonGroup
           color="primary"
           value={alignment}
@@ -140,7 +144,7 @@ function DetailEdit({ setEdit }) {
       </Box>
 
       <Stack m={10} justifyContent="center" direction="row">
-        <Button color="error">Delete Route</Button>
+        <Button onClick={() => deleteClicked()} color="error">Delete Route</Button>
       </Stack>
       {/* </Box> */}
     </Paper>

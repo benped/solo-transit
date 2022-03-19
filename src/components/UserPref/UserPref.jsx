@@ -21,12 +21,12 @@ function UserPref({ route }) {
       let response = await axios.get(
         `https://svc.metrotransit.org/nextripv2/${route.stop_id}`
       );
-
+      console.log(response);
       departure = response.data.departures[0].departure_text;
       console.log("Inside user pref departure data", departure);
       setArrival(departure);
-    } catch {
-      console.log("error on axios get");
+    } catch (error) {
+      console.log("error on axios get",(error));
     }
   };
 

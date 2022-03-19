@@ -33,7 +33,8 @@ function DetailEdit({ setEdit }) {
         phone: phone,
         email: email,
         notify_mode: notify_mode,
-        time: time
+        time: time,
+        preference_id: detail.preference_id
     }
     console.log("payload is",payload);
     dispatch({type: "UPDATE_NOTIFICATIONS", payload: payload})
@@ -44,11 +45,11 @@ function DetailEdit({ setEdit }) {
     setAlignment(newAlignment);
   };
 
-  const handleOnPhoneChange = (value) => {
-    setPhone(
-      value
-    );
-  };
+//   const handleOnPhoneChange = (value) => {
+//     setPhone(
+//       value
+//     );
+//   };
 
 //   const handleOnEmailChange = (value) => {
 //       console.log(value);
@@ -81,10 +82,9 @@ function DetailEdit({ setEdit }) {
         <ToggleButton value="email">Email</ToggleButton>
       </ToggleButtonGroup>
       {alignment == "text" ? (
-        <MuiPhoneNumber
-          defaultCountry={"us"}
-          onlyCountries={["us"]}
-          onChange={handleOnPhoneChange}
+        <TextField
+          type="number"
+          onChange={(event) => setPhone(event.target.value)}
         />
       ) : (
         <TextField id="standard-basic" label="Standard" variant="standard" value={email} onChange={(event) =>setEmail(event.target.value)}/>

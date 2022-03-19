@@ -32,11 +32,26 @@ router.get("/details/:id", (req, res) => {
     });
 });
 
-router.put("/", (req,res) => {
-  console.log('req.body is', req.body);
-  res.sendStatus(200);
+router.put("/", (req, res) => {
+  console.log("req.body is", req.body);
+  let queryText =
+    'UPDATE "user_preferences" SET "phone" = $1, "email" = $2, "time" = $3, "notify_mode" = $4  WHERE "preference_id" = $5;';
+  const { phone, email, notify_mode, time, preference_id }
+     = req.body.payload;
+  console.log('phone is', email);
   
-})
+  pool
+    .query(queryText, [phone, email, time, notify_mode, preference_id])
+    .then((result) => {
+      console.log("result is", result);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log("Error on put", err);
+      res.sendStatus(500);
+    });
+ 
+});
 
 /**
  * POST route template

@@ -12,11 +12,15 @@ function DetailEdit({ setEdit }) {
 
   const [directionList, setDirectionList] = useState([]);
   const [direction, setDirection] = useState(detail.direction_name);
+  const [directionValue, setDirectionValue] =useState(detail.direction_id);
 
   const [directionID, setDirectionID] = useState(detail.direction_id);
 
   const [stopList, setStopList] = useState([]);
-  const [stop, setStop] = useState(detail.description);
+  const [stop, setStop] = useState({place_code:detail.place_code, description: detail.description});
+  const [stopValue, setStopValue] = useState(detail.description)
+
+  const [defaultStop, setDefaultStop ] = useState(detail.description)
 
   useEffect(() => {
     setUpFunction();
@@ -74,6 +78,8 @@ function DetailEdit({ setEdit }) {
       console.log("firing getDirections");
       console.log(response.data);
       setDirectionList(response.data);
+      // set direction value to 0, this is id, can't change
+      setDirectionValue(0)
       //   setDirection(response.data[0].direction_name)
       //   setDirectionID(response.data[0].direction_id)
       getStops(inputRoute, 0);
@@ -91,6 +97,7 @@ function DetailEdit({ setEdit }) {
       );
       console.log(response);
       setStopList(response.data);
+      setStop(response.data[0])
       console.log("stop list is", stopList);
     } catch {
       console.log("error on stops get");
@@ -116,11 +123,21 @@ function DetailEdit({ setEdit }) {
     getStops(route,selectedID);
     setDirectionID(selectedID);
     // setStop("");
+
   };
 
   const routeChange = (value) => {
     getDirections(value);
   };
+
+  const saveClicked = () => {
+    console.log("route is", route);
+    console.log("Stop is", stop);
+    console.log('direction value is',directionValue);
+    console.log("Direction is ID", directionID);
+    console.log("Direction is", direction);
+    console.log('stop value is', stopValue);
+  }
 
   return (
     <div>
@@ -131,7 +148,7 @@ function DetailEdit({ setEdit }) {
         onChange={(event) => {
           //   setRoute(event.target.value);
           console.log(event.target.value);
-          setDirection("");
+          
           //   getDirections();
           routeChange(event.target.value);
           setRoute(event.target.value)
@@ -153,12 +170,13 @@ function DetailEdit({ setEdit }) {
 
       {/* DIRECTION REDUCER AND DROPDOWN */}
       <select
-        // value={route}
+        value={directionValue}
         onChange={(event) => {
           //   event.preventDefault();
           directionChange(event.target.value);
           searchDirection(event.target.value);
           setDirectionID(event.target.value);
+          setDirectionValue(event.target.value);
           console.log("on click directionID", event.target.id);
         }}
       >
@@ -176,13 +194,15 @@ function DetailEdit({ setEdit }) {
       {/* STOPSSSSSSS */}
 
       <select
+      value={stopValue}
         onChange={(event) => {
-          setStop(event.target.value);
+        //   setStop(event.target.value);
+          setStopValue(event.target.value)
         }}
       >
         {stopList.length > 0 &&
           stopList.map((place, i) =>
-            place.place_code == detail.place_code ? (
+            place.place_code == defaultStop ? (
               <option selected id={place.place_code} value={place.description}>
                 {place.description}
               </option>
@@ -194,8 +214,10 @@ function DetailEdit({ setEdit }) {
           )}
       </select>
 
-      <p>Notify At: {detail.time}</p>
+      {/* <p>Notify At: {detail.time}</p> */}
+      <input type="time" id="notify" name="notify" defaultValue={detail.time} />
       <button onClick={() => setEdit(false)}>Back</button>
+      <button onClick={() => saveClicked()}>Save</button>
     </div>
   );
 }

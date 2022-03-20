@@ -44,7 +44,7 @@ function* fetchData(action) {
         direction_name: directionObj.direction_name,
         place_code:placeCode,
         description:stopObj.description,
-        stop_id:stopId,
+        stop_id: stopId,
     }})
     // const response = yield axios.get(`https://svc.metrotransit.org/nextripv2/stops/${route}/${direction}`);
     // console.log('response from server is,', response);

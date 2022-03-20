@@ -4,12 +4,13 @@ import { useHistory, useParams } from "react-router-dom";
 
 function Stops() {
   const dispatch = useDispatch();
-  const userPref = useSelector((store) => store.userPrefReducer);
+  // const userPref = useSelector((store) => store.userPrefReducer);
   const summary = useSelector((store) => store.summaryReducer);
 
   const history = useHistory();
 
-  const { route, direction, stop } = userPref;
+  // const { route, direction, stop } = userPref;
+  const { route_id, route_label, direction_id, direction_name, place_code, description} = summary; 
   const { routeParam, directionParam, placeCode } = useParams();
 
   useEffect(() => {
@@ -32,17 +33,21 @@ function Stops() {
       alert("Fill out time!");
       return;
     }
-
+// console.log('Route is', route);
+// console.log('direction is', direction);
+// console.log('Stop is', stop);
+// console.log('user pref is', userPref);
+console.log(summary);
     console.log("inside confirm", notify.value);
     dispatch({
       type: "CONFIRM_NEW_PREF",
       payload: {
-        route_id: route,
-        // route_label: route.route_label,
-        direction_id: direction.direction_id,
-        direction_name: direction.direction_name,
-        place_code: stop.place_code,
-        description: stop.description,
+        route_id: route_id,
+        route_label: route_label,
+        direction_id: direction_id,
+        direction_name: direction_name,
+        place_code: place_code,
+        description: description,
         time: notify.value,
       },
     });

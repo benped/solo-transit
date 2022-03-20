@@ -62,8 +62,10 @@ router.delete("/:id", (req, res) => {
     .then((result) => {
       console.log("result is", result);
       res.sendStatus(200);
+      
     })
     .catch((err) => {
+
       console.log("Error on delete", err);
       res.sendStatus(500);
     });

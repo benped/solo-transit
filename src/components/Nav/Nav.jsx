@@ -30,16 +30,16 @@ function Nav() {
             </Link>
 
             <Link className="navLink" to="/info">
-              Info Page
+              Add Route
             </Link>
-
-            <LogOutButton className="navLink" />
-          </>
-        )}
 
         <Link className="navLink" to="/about">
           About
         </Link>
+            <LogOutButton className="navLink" />
+          </>
+        )}
+
       </div>
     </div>
   );

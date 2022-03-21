@@ -6,14 +6,14 @@ function* postPref(action) {
   try {
     console.log("action.payload is", action.payload);
 
-    const response = yield axios.post('/api/preference/', action.payload)
-    
+    const response = yield axios.post("/api/preference/", action.payload);
+
     // now that the session has given us a route object
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
-  
-    console.log('response from server is', response.data);
-    
+
+    console.log("response from server is", response.data);
+    yield put({ type: "FETCH_USER_PREF" });
   } catch (error) {
     console.log("post request failed", error);
   }

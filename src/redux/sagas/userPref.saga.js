@@ -31,9 +31,23 @@ function* putNotify(payload) {
     }
 }
 
+function* deletePref(payload) {
+  try {
+    console.log('Delete pref payload is', payload.payload);
+    
+    const response = yield axios.delete(`/api/preference/${payload.payload}`)
+    console.log('Response is', response);
+    
+  } catch {
+    console.log('error on delete pref');
+    
+  }
+}
+
 function* userPrefSaga() {
   yield takeLatest("FETCH_USER_PREF", getPref);
-  yield takeLatest("UPDATE_NOTIFICATIONS", putNotify)
+  yield takeLatest("UPDATE_NOTIFICATIONS", putNotify);
+  yield takeLatest("DELETE_ROUTE_PREF", deletePref);
 }
 
 export default userPrefSaga;

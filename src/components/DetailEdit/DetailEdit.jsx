@@ -8,12 +8,23 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from "@mui/material/TextField";
 
+import Box from "@mui/material/Box";
+import Switch from "@mui/material/Switch";
+import Paper from "@mui/material/Paper";
+import Slide from "@mui/material/Slide";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
+import Typography from "@mui/material/Typography";
+import TimePicker from "@mui/lab/TimePicker";
+
 function DetailEdit({ setEdit }) {
   const detail = useSelector((store) => store.detailReducer);
   const [time, setTime] = useState(detail.time);
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const history = useHistory();
   const dispatch = useDispatch();
   let notify_mode;
 
@@ -30,14 +41,16 @@ function DetailEdit({ setEdit }) {
       notify_mode = "text";
     } else notify_mode = "email";
     const payload = {
-        phone: phone,
-        email: email,
-        notify_mode: notify_mode,
-        time: time,
-        preference_id: detail.preference_id
-    }
-    console.log("payload is",payload);
-    dispatch({type: "UPDATE_NOTIFICATIONS", payload: payload})
+      phone: String(phone),
+      email: String(email),
+      notify_mode: notify_mode,
+      time: time,
+      preference_id: detail.preference_id,
+    };
+    console.log("payload is", payload);
+    dispatch({ type: "UPDATE_NOTIFICATIONS", payload: payload });
+    dispatch({ type: "FETCH_USER_PREF" });
+    history.push("/");
   };
   const [alignment, setAlignment] = useState("text");
 
@@ -45,54 +58,103 @@ function DetailEdit({ setEdit }) {
     setAlignment(newAlignment);
   };
 
-//   const handleOnPhoneChange = (value) => {
-//     setPhone(
-//       value
-//     );
-//   };
-
-//   const handleOnEmailChange = (value) => {
-//       console.log(value);
-//       setEmail(value);
-//   };
+  const deleteClicked = () => {
+    console.log("Delete Clicked");
+    dispatch({ type: "DELETE_ROUTE_PREF", payload: detail.preference_id });
+    history.push("/");
+  };
 
   return (
-    <div>
-      <button onClick={() => setEdit(false)}>Back</button> <h1> Edit </h1>
-      <h5>{detail.route_id}</h5>
-      <h5>{detail.description}</h5>
-      <h5>{detail.direction_name}</h5>
-      <h2>Change Notification TIme</h2>
-      {/* <p>Notify At: {detail.time}</p> */}
-      <input
-        type="time"
-        id="notify"
-        name="notify"
-        defaultValue={time}
-        onChange={(event) => setTime(event.target.value)}
-      />
-      <h2>Update Notification Delivery</h2>
-      <ToggleButtonGroup
-        color="primary"
-        value={alignment}
-        exclusive
-        onChange={deliverChange}
+    <Paper sx={{ m: 1 }} elevation={4}>
+      {/* <Box component="svg" sx={{ width: 100, height: 100 }}> */}
+      <Button ml={2} onClick={() => setEdit(false)} variant="text">
+        Back
+      </Button>
+      <Stack mr={2} spacing={12} direction="row">
+        <Box direction="row">
+          <Typography variant="h2">{detail.route_id}</Typography>
+        </Box>
+        <Box>
+          <h5>{detail.description}</h5>
+          <p>heading</p>
+          <h5>{detail.direction_name}</h5>
+        </Box>
+      </Stack>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
-        <ToggleButton value="text">Text</ToggleButton>
-        <ToggleButton value="email">Email</ToggleButton>
-      </ToggleButtonGroup>
-      {alignment == "text" ? (
-        <TextField
-          type="number"
-          onChange={(event) => setPhone(event.target.value)}
+        <Typography variant="h6">Change Notification Time</Typography>
+        {/* <p>Notify At: {detail.time}</p> */}
+        <input
+          type="time"
+          id="notify"
+          name="notify"
+          defaultValue={time}
+          onChange={(event) => setTime(event.target.value)}
         />
-      ) : (
-        <TextField id="standard-basic" label="Standard" variant="standard" value={email} onChange={(event) =>setEmail(event.target.value)}/>
-      )}
-      <button onClick={() => saveClicked()}>Save</button>
-      <h2>Delete Route Reminder</h2>
-      <button>Delete</button>
-    </div>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: 5,
+        }}
+      >
+        <Typography variant="h6">Update Notification Delivery</Typography>
+        <ToggleButtonGroup
+          color="primary"
+          value={alignment}
+          sx={{
+            p: 1,
+            m: 1,
+          }}
+          exclusive
+          onChange={deliverChange}
+        >
+          <ToggleButton value="text">SMS</ToggleButton>
+          <ToggleButton value="email">Email</ToggleButton>
+        </ToggleButtonGroup>
+        <Box
+          sx={{
+            p: 1,
+            m: 1,
+          }}
+        >
+          {alignment == "text" ? (
+            <TextField
+              type="number"
+              label="phone"
+              variant="standard"
+              onChange={(event) => setPhone(event.target.value)}
+            />
+          ) : (
+            <TextField
+              id="standard-basic"
+              label="Email"
+              variant="standard"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          )}
+        </Box>
+        <Button onClick={() => saveClicked()}>Save</Button>
+      </Box>
+
+      <Stack m={10} justifyContent="center" direction="row">
+        <Button onClick={() => deleteClicked()} color="error">
+          Delete Route
+        </Button>
+      </Stack>
+      {/* </Box> */}
+    </Paper>
   );
 }
 

@@ -25,7 +25,6 @@ function UserPage() {
     <>
       <div className="container">
         <h2>Welcome, {user.username}!</h2>
-        <p>Your Transit Routes:</p>
         {/* Add in to ternary for no routes here */}
         {userRoutes.length > 0 && 
         userRoutes.map((route, i) => {

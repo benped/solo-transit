@@ -8,6 +8,7 @@ import stopReducer from './stop.reducer';
 import userRoutesReducer from './userRoutes.reducer';
 import detailReducer from './detail.reducer';
 import arrivalReducer from './arrival.reducer';
+import summaryReducer from './summary.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   userRoutesReducer,
   detailReducer,
   arrivalReducer,
+  summaryReducer,
 });
 
 export default rootReducer;

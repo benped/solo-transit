@@ -36,7 +36,7 @@ function InfoPage() {
 
   return (
     <div>
-          <p>Info Page</p>
+        
 
       <Router>
         <div className="container">
@@ -45,15 +45,15 @@ function InfoPage() {
             <RouteList routes={routes} />
           </Route>
 
-          <Route path="/info/directions">
+          <Route path="/info/directions/:routeParam/" exact>
             <Directions />
           </Route>
 
-          <Route path="/info/stops">
+          <Route path="/info/directions/stops/:routeParam/:directionParam" exact >
             <Stops />
           </Route>
 
-          <Route path="/info/summary">
+          <Route path="/info/directions/stops/summary/:routeParam/:directionParam/:placeCode" exact>
             <Summary />
           </Route>
 

@@ -32,16 +32,16 @@ router.get("/details/:id", (req, res) => {
     });
 });
 
+//  =============== Update Time and Notification Preference =======================
 router.put("/", (req, res) => {
   console.log("req.body is", req.body);
   let queryText =
     'UPDATE "user_preferences" SET "phone" = $1, "email" = $2, "time" = $3, "notify_mode" = $4  WHERE "preference_id" = $5;';
-  const { phone, email, notify_mode, time, preference_id }
-     = req.body.payload;
-  console.log('phone is', email);
-  
+  const { phone, email, notify_mode, time, preference_id } = req.body.payload;
+  console.log("phone is", email);
+
   pool
-    .query(queryText, [phone, email, time, notify_mode, preference_id])
+    .query(queryText, [String(phone), email, time, notify_mode, preference_id])
     .then((result) => {
       console.log("result is", result);
       res.sendStatus(200);
@@ -50,7 +50,25 @@ router.put("/", (req, res) => {
       console.log("Error on put", err);
       res.sendStatus(500);
     });
- 
+});
+
+// ==================== Delete Route Preference ========================
+router.delete("/:id", (req, res) => {
+  console.log("params are", req.params.id);
+  let query = `DELETE FROM "user_preferences" WHERE "preference_id" = $1;`;
+  let queryInsert = [req.params.id];
+  pool
+    .query(query, queryInsert)
+    .then((result) => {
+      console.log("result is", result);
+      res.sendStatus(200);
+
+    })
+    .catch((err) => {
+
+      console.log("Error on delete", err);
+      res.sendStatus(500);
+    });
 });
 
 /**
@@ -92,8 +110,6 @@ router.post("/", async (req, res) => {
     console.log("Error is", err);
     res.sendStatus(500);
   }
-
-  // ADD TRY AND CATCH HERE
 });
 
 module.exports = router;

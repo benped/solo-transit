@@ -1,13 +1,35 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 function Stops() {
   const dispatch = useDispatch();
-  const userPref = useSelector((store) => store.userPrefReducer);
+  // const userPref = useSelector((store) => store.userPrefReducer);
+  const summary = useSelector((store) => store.summaryReducer);
+
   const history = useHistory();
 
-  const { route, direction, stop } = userPref;
+  // const { route, direction, stop } = userPref;
+  const {
+    route_id,
+    route_label,
+    direction_id,
+    direction_name,
+    place_code,
+    description,
+  } = summary;
+  const { routeParam, directionParam, placeCode } = useParams();
+
+  useEffect(() => {
+    dispatch({
+      type: "GET_ALL_DATA",
+      payload: {
+        direction: directionParam,
+        route: routeParam,
+        placeCode: placeCode,
+      },
+    });
+  }, []);
 
   const backButton = () => {
     history.push("/info/stops");
@@ -19,19 +41,21 @@ function Stops() {
       return;
     }
 
+    console.log(summary);
     console.log("inside confirm", notify.value);
     dispatch({
       type: "CONFIRM_NEW_PREF",
       payload: {
-        route_id: route,
-        // route_label: route.route_label,
-        direction_id: direction.direction_id,
-        direction_name: direction.direction_name,
-        place_code: stop.place_code,
-        description: stop.description,
+        route_id: route_id,
+        route_label: route_label,
+        direction_id: direction_id,
+        direction_name: direction_name,
+        place_code: place_code,
+        description: description,
         time: notify.value,
       },
     });
+    dispatch({ type: "FETCH_USER_PREF" });
     history.push("/");
   };
 
@@ -41,9 +65,9 @@ function Stops() {
     <>
       <h1>Summary</h1>
 
-      <p>Route: {userPref.route}</p>
-      <p>Direction: {userPref.direction.direction_name}</p>
-      <p>Stop: {userPref.stop.description}</p>
+      <p>{summary.route_label}</p>
+      <p>Direction: {summary.direction_name}</p>
+      <p>Stop: {summary.description}</p>
 
       <label for="appt">When do you want to be notified?</label>
       <input type="time" id="notify" name="notify" defaultValue={0} />

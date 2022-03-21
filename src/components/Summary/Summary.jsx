@@ -10,7 +10,14 @@ function Stops() {
   const history = useHistory();
 
   // const { route, direction, stop } = userPref;
-  const { route_id, route_label, direction_id, direction_name, place_code, description} = summary; 
+  const {
+    route_id,
+    route_label,
+    direction_id,
+    direction_name,
+    place_code,
+    description,
+  } = summary;
   const { routeParam, directionParam, placeCode } = useParams();
 
   useEffect(() => {
@@ -33,11 +40,8 @@ function Stops() {
       alert("Fill out time!");
       return;
     }
-// console.log('Route is', route);
-// console.log('direction is', direction);
-// console.log('Stop is', stop);
-// console.log('user pref is', userPref);
-console.log(summary);
+
+    console.log(summary);
     console.log("inside confirm", notify.value);
     dispatch({
       type: "CONFIRM_NEW_PREF",
@@ -51,6 +55,7 @@ console.log(summary);
         time: notify.value,
       },
     });
+    dispatch({ type: "FETCH_USER_PREF" });
     history.push("/");
   };
 

@@ -40,6 +40,7 @@ function UserPref({ route }) {
         <h2>{route.route_id}</h2>
         <p>Arriving: {arrival}</p>
         <h3>{route.description}</h3>
+        <h3>{route.direction_name}</h3>
         <h3></h3>
       </div>
     </>

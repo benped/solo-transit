@@ -16,7 +16,7 @@ function UserPage() {
   // const user = useSelector(store => store.user);
 
   useEffect(() => {
-    dispatch({ type: "FETCH_USER_PREF" });
+    // dispatch({ type: "FETCH_USER_PREF" });
   }, [dispatch]);
 
   // console.log();
@@ -27,7 +27,8 @@ function UserPage() {
         <h2>Welcome, {user.username}!</h2>
         <p>Your Transit Routes:</p>
         {/* Add in to ternary for no routes here */}
-        {userRoutes.map((route, i) => {
+        {userRoutes.length > 0 && 
+        userRoutes.map((route, i) => {
           return <UserPref route={route} key={i} />;
         })}
 

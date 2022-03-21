@@ -41,14 +41,16 @@ function DetailEdit({ setEdit }) {
       notify_mode = "text";
     } else notify_mode = "email";
     const payload = {
-      phone: phone,
-      email: email,
+      phone: String(phone),
+      email: String(email),
       notify_mode: notify_mode,
       time: time,
       preference_id: detail.preference_id,
     };
     console.log("payload is", payload);
     dispatch({ type: "UPDATE_NOTIFICATIONS", payload: payload });
+    dispatch({ type: "FETCH_USER_PREF" });
+    history.push("/");
   };
   const [alignment, setAlignment] = useState("text");
 
@@ -56,45 +58,46 @@ function DetailEdit({ setEdit }) {
     setAlignment(newAlignment);
   };
 
-const deleteClicked = () => {
-  console.log('Delete Clicked');
-  dispatch({type: "DELETE_ROUTE_PREF", payload: detail.preference_id});
-  history.push('/');
-}
+  const deleteClicked = () => {
+    console.log("Delete Clicked");
+    dispatch({ type: "DELETE_ROUTE_PREF", payload: detail.preference_id });
+    history.push("/");
+  };
 
   return (
     <Paper sx={{ m: 1 }} elevation={4}>
       {/* <Box component="svg" sx={{ width: 100, height: 100 }}> */}
+      <Button ml={2} onClick={() => setEdit(false)} variant="text">
+        Back
+      </Button>
       <Stack mr={2} spacing={12} direction="row">
-        <Button ml={2} onClick={() => setEdit(false)} variant="text">
-          Back
-        </Button>
-        <Box direction="column">
+        <Box direction="row">
           <Typography variant="h2">{detail.route_id}</Typography>
-          <Box>
-            <h5>{detail.description}</h5>
-            <p>heading</p>
-            <h5>{detail.direction_name}</h5>
-          </Box>
+        </Box>
+        <Box>
+          <h5>{detail.description}</h5>
+          <p>heading</p>
+          <h5>{detail.direction_name}</h5>
         </Box>
       </Stack>
-      <Box         sx={{
+      <Box
+        sx={{
           display: "flex",
           justifyContent: "center",
           flexDirection: "column",
           alignItems: "center",
-        }}>
-
-<Typography variant="h6">Change Notification Time</Typography>
-      {/* <p>Notify At: {detail.time}</p> */}
-      <input
-        type="time"
-        id="notify"
-        name="notify"
-        defaultValue={time}
-        onChange={(event) => setTime(event.target.value)}
+        }}
+      >
+        <Typography variant="h6">Change Notification Time</Typography>
+        {/* <p>Notify At: {detail.time}</p> */}
+        <input
+          type="time"
+          id="notify"
+          name="notify"
+          defaultValue={time}
+          onChange={(event) => setTime(event.target.value)}
         />
-        </Box>
+      </Box>
 
       <Box
         sx={{
@@ -102,7 +105,7 @@ const deleteClicked = () => {
           justifyContent: "center",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: 5
+          marginTop: 5,
         }}
       >
         <Typography variant="h6">Update Notification Delivery</Typography>
@@ -128,12 +131,14 @@ const deleteClicked = () => {
           {alignment == "text" ? (
             <TextField
               type="number"
+              label="phone"
+              variant="standard"
               onChange={(event) => setPhone(event.target.value)}
             />
           ) : (
             <TextField
               id="standard-basic"
-              label="Standard"
+              label="Email"
               variant="standard"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
@@ -144,7 +149,9 @@ const deleteClicked = () => {
       </Box>
 
       <Stack m={10} justifyContent="center" direction="row">
-        <Button onClick={() => deleteClicked()} color="error">Delete Route</Button>
+        <Button onClick={() => deleteClicked()} color="error">
+          Delete Route
+        </Button>
       </Stack>
       {/* </Box> */}
     </Paper>

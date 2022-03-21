@@ -41,7 +41,7 @@ router.put("/", (req, res) => {
   console.log("phone is", email);
 
   pool
-    .query(queryText, [phone, email, time, notify_mode, preference_id])
+    .query(queryText, [String(phone), email, time, notify_mode, preference_id])
     .then((result) => {
       console.log("result is", result);
       res.sendStatus(200);
@@ -62,7 +62,7 @@ router.delete("/:id", (req, res) => {
     .then((result) => {
       console.log("result is", result);
       res.sendStatus(200);
-      
+
     })
     .catch((err) => {
 

@@ -10,7 +10,7 @@ function RouteList({ routes }) {
   const [routeParam, setRouteParam] = useState()
   const userPref = useSelector((store) => store.userPrefReducer);
   let newBusArr = routes.slice(9, 36);
-
+  
   const nextClicked = () => {
     history.push(`/info/directions/${routeParam}`);
   };

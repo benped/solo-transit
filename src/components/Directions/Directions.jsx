@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import LinearProgress from '@mui/material/LinearProgress';
+
 function Directions() {
   const dispatch = useDispatch();
   const direction = useSelector((store) => store.directionReducer);
@@ -30,7 +32,7 @@ function Directions() {
   // };
 
   const backButton = () => {
-    history.push(`/info/`);
+    history.push(`/info/${routeParam}`);
   };
 
   const nextButton = () => {
@@ -40,6 +42,7 @@ function Directions() {
 
   return (
     <>
+    <LinearProgress variant="determinate" value={40} />
       <p>Route: {userPref.route}</p>
 
       <h1>Direction: {localDirection}</h1>

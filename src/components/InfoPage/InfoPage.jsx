@@ -31,7 +31,21 @@ function InfoPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const stops = useSelector((store) => store.stopReducer);
   const routes = useSelector((store) => store.routeReducer);
+  const [routeLabel, setRouteLabel] = useState('Route');
+  const [directionLabel, setDirectionLabel] = useState('Direction');
+  const [routeParam, setRouteParam] = useState('');
+  const [directionObj, setDirectionObj] = useState({});
+  const [selectedStop, setSelectedStop] = useState('');
+  const [stopLabel, setStopLabel] = useState('Stop');
+
+  
+  // const updateStop = () => {
+  //   let found = stops.find(e => e.place_code === selectedStop);
+  //   console.log(found);
+  //   setStopLabel(found.description);
+  // }
 
   useEffect(() => {
     console.log("in useEffect");
@@ -55,9 +69,9 @@ function InfoPage() {
   };
 
   const steps = [
-    { stepContent: <RouteList routes={routes} />, label: "Route" },
-    { stepContent: <Directions />, label: "Direction" },
-    { stepContent: <Stops />, label: "Stop" },
+    { stepContent: <RouteList routes={routes} setRouteLabel={setRouteLabel} setRouteParam={setRouteParam}/>, label: routeLabel },
+    { stepContent: <Directions setDirectionLabel={setDirectionLabel} routeParam={routeParam} setDirectionObj={setDirectionObj}/>, label: directionLabel },
+    { stepContent: <Stops routeParam={routeParam} directionObj={directionObj} setSelectedStop={setSelectedStop} />, label: stopLabel },
     { stepContent: <Summary />, label: "Summary" },
   ];
 

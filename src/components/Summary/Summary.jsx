@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
-function Stops() {
+function Summary() {
   const dispatch = useDispatch();
   // const userPref = useSelector((store) => store.userPrefReducer);
   const summary = useSelector((store) => store.summaryReducer);
@@ -80,4 +80,4 @@ function Stops() {
   );
 }
 
-export default Stops;
+export default Summary;

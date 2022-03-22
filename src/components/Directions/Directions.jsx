@@ -40,6 +40,14 @@ function Directions({setDirectionLabel, setDirectionObj, routeParam}) {
     history.push(`/info/directions/stops/${routeParam}/${directionObj.direction_id}`)
   };
 
+  const directionClicked = (direction_id) => {
+
+    dispatch({
+      type: "GET_STOPS",
+      payload: { direction: direction_id, route: routeParam },
+    });
+  }
+
   return (
     <>
 
@@ -50,6 +58,7 @@ function Directions({setDirectionLabel, setDirectionObj, routeParam}) {
               setLocalDirection(event.target.value);
               setDirectionObj(direction[0]);
               setDirectionLabel(event.target.value);
+              directionClicked(0);
             }}
             // id={direction[0].direction_id}
             value={direction[0].direction_name}
@@ -61,6 +70,7 @@ function Directions({setDirectionLabel, setDirectionObj, routeParam}) {
               setLocalDirection(event.target.value);
               setDirectionObj(direction[1]);
               setDirectionLabel(event.target.value);
+              directionClicked(1);
             }}
             // id={direction[1].direction_id}
             value={direction[1].direction_name}

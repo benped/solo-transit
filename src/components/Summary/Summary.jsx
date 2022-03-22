@@ -10,26 +10,26 @@ function Summary() {
   const history = useHistory();
 
   // const { route, direction, stop } = userPref;
-  const {
-    route_id,
-    route_label,
-    direction_id,
-    direction_name,
-    place_code,
-    description,
-  } = summary;
-  const { routeParam, directionParam, placeCode } = useParams();
+  // const {
+  //   route_id,
+  //   route_label,
+  //   direction_id,
+  //   direction_name,
+  //   place_code,
+  //   description,
+  // } = summary;
+  // const { routeParam, directionParam, placeCode } = useParams();
 
-  useEffect(() => {
-    dispatch({
-      type: "GET_ALL_DATA",
-      payload: {
-        direction: directionParam,
-        route: routeParam,
-        placeCode: placeCode,
-      },
-    });
-  }, []);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: "GET_ALL_DATA",
+  //     payload: {
+  //       direction: directionParam,
+  //       route: routeParam,
+  //       placeCode: placeCode,
+  //     },
+  //   });
+  // }, []);
 
   const backButton = () => {
     history.push("/info/stops");
@@ -63,19 +63,13 @@ function Summary() {
 
   return (
     <>
-      <h1>Summary</h1>
-
-      <p>{summary.route_label}</p>
-      <p>Direction: {summary.direction_name}</p>
-      <p>Stop: {summary.description}</p>
-
-      <label for="appt">When do you want to be notified?</label>
+      <label >When do you want to be notified?</label>
       <input type="time" id="notify" name="notify" defaultValue={0} />
 
-      <div>
+      {/* <div>
         <button onClick={backButton}>Back</button>
         <button onClick={nextButton}>Next</button>
-      </div>
+      </div> */}
     </>
   );
 }

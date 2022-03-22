@@ -33,14 +33,14 @@ function InfoPage() {
 
   const stops = useSelector((store) => store.stopReducer);
   const routes = useSelector((store) => store.routeReducer);
-  const [routeLabel, setRouteLabel] = useState('Route');
-  const [directionLabel, setDirectionLabel] = useState('Direction');
-  const [routeParam, setRouteParam] = useState('');
+  const [routeLabel, setRouteLabel] = useState("Route");
+  const [directionLabel, setDirectionLabel] = useState("Direction");
+  const [routeParam, setRouteParam] = useState("");
   const [directionObj, setDirectionObj] = useState({});
-  const [selectedStop, setSelectedStop] = useState('');
-  const [stopLabel, setStopLabel] = useState('Stop');
+  const [selectedStop, setSelectedStop] = useState("");
+  const [stopLabel, setStopLabel] = useState("Stop");
+  const [stop, setStop] = useState("");
 
-  
   // const updateStop = () => {
   //   let found = stops.find(e => e.place_code === selectedStop);
   //   console.log(found);
@@ -53,26 +53,101 @@ function InfoPage() {
   }, []);
 
   // console.log(newBusArr);
+  const summary = useSelector((store) => store.summaryReducer);
 
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleNext = () => {
+  const handleNext = (index) => {
+    // console.log(routes);
+    // INSERT FINAL STEP ACTIONS HERE
+    if (index === steps.length - 1){
+      dispatch({
+        type: "CONFIRM_NEW_PREF",
+        payload: {
+          route_id: routeParam,
+          route_label: routeLabel,
+          direction_id: directionObj.direction_id,
+          direction_name: directionObj.direction_name,
+          place_code: stop.place_code,
+          description: stop.description,
+          time: notify.value,
+        }
+      });
+    }
+    // console.log(setps.length);
+    // console.log(index);
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
+  const handleReset = () => {   
+    // console.log('INSIDE HANDLE RESET');
+     // INSERT FINAL STEP ACTIONS HERE
+    // if (index === steps.length - 1){
+    //   dispatch({
+    //     type: "CONFIRM_NEW_PREF",
+    //     payload: {
+    //       route_id: routeParam,
+    //       route_label: routeLabel,
+    //       direction_id: directionObj.direction_id,
+    //       direction_name: directionObj.direction_name,
+    //       place_code: stop.place_code,
+    //       description: stop.description,
+    //       time: notify.value,
+    //     }
+    //   });
+    // }
+    // console.log(setps.length);
+    // console.log(index);
+    setRouteLabel("Route");
+    setDirectionLabel("Direction");
+    setRouteParam("");
+    setDirectionObj({});
+    setSelectedStop("");
+    setStopLabel("Stop");
+    setStop("");
+    dispatch({type:"RESET_USER_PREF"});
     setActiveStep(0);
   };
 
   const steps = [
-    { stepContent: <RouteList routes={routes} setRouteLabel={setRouteLabel} setRouteParam={setRouteParam}/>, label: routeLabel },
-    { stepContent: <Directions setDirectionLabel={setDirectionLabel} routeParam={routeParam} setDirectionObj={setDirectionObj}/>, label: directionLabel },
-    { stepContent: <Stops routeParam={routeParam} directionObj={directionObj} setSelectedStop={setSelectedStop} />, label: stopLabel },
-    { stepContent: <Summary />, label: "Summary" },
+    {
+      stepContent: (
+        <RouteList
+          routes={routes}
+          setRouteLabel={setRouteLabel}
+          setRouteParam={setRouteParam}
+        />
+      ),
+      label: routeLabel,
+    },
+    {
+      stepContent: (
+        <Directions
+          setDirectionLabel={setDirectionLabel}
+          routeParam={routeParam}
+          setDirectionObj={setDirectionObj}
+        />
+      ),
+      label: directionLabel,
+    },
+    {
+      stepContent: (
+        <Stops
+          routeParam={routeParam}
+          directionObj={directionObj}
+          setStopLabel={setStopLabel}
+          setStop={setStop}
+          stop={stop}
+        />
+      ),
+      label: "Stop: "+ stop.description,
+    },
+    { stepContent: <Summary />, label: "Notification" },
   ];
 
   return (
@@ -96,7 +171,7 @@ function InfoPage() {
                   <div>
                     <Button
                       variant="contained"
-                      onClick={handleNext}
+                      onClick={() => {handleNext(index)}}
                       sx={{ mt: 1, mr: 1 }}
                     >
                       {index === steps.length - 1 ? "Finish" : "Continue"}

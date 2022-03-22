@@ -2,24 +2,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import LinearProgress from '@mui/material/LinearProgress';
-
-function Directions() {
+function Directions({setDirectionLabel, directionLabel, setDirectionObj, routeParam, setNext}) {
   const dispatch = useDispatch();
   const direction = useSelector((store) => store.directionReducer);
   const route = useSelector((store) => store.userPrefReducer.route);
   const history = useHistory();
   const userPref = useSelector((store) => store.userPrefReducer);
-  const { routeParam } = useParams();
+  // const { routeParam } = useParams();
   const [localDirection, setLocalDirection] = useState();
-  const [directionObj, setDirectionObj] = useState({});
+  // const [directionObj, setDirectionObj] = useState({});
 
   // console.log("Inside directions: directions are:", direction);
-  console.log("RouteParam is", routeParam);
+  // console.log("RouteParam is", routeParam);
 
   useEffect(() => {
-    console.log("in direction useEffect");
-    dispatch({ type: "GET_DIRECTION", payload: routeParam });
+    console.log("in direction useEffect, route Param is", routeParam);
+    console.log("in direction useEffect, userPref Route is", userPref.route);
+    if (directionLabel !== direction[0].direction_name || directionLabel !== direction[1].direction_name){
+      setNext(false);}
+
+    // dispatch({ type: "GET_DIRECTION", payload: routeParam });
   }, []);
 
   // console.log("user pref is ", userPref);
@@ -31,21 +33,26 @@ function Directions() {
   //   });
   // };
 
-  const backButton = () => {
-    history.push(`/info/${routeParam}`);
-  };
+  // const backButton = () => {
+  //   history.push(`/info/`);
+  // };
 
-  const nextButton = () => {
-    console.log(directionObj.direction_id);
-    history.push(`/info/directions/stops/${routeParam}/${directionObj.direction_id}`)
-  };
+  // const nextButton = () => {
+  //   console.log(directionObj.direction_id);
+  //   history.push(`/info/directions/stops/${routeParam}/${directionObj.direction_id}`)
+  // };
+
+  const directionClicked = async (direction_id) => {
+    
+   await dispatch({
+      type: "GET_STOPS",
+      payload: { direction: direction_id, route: routeParam },
+    });
+    setNext(true);
+  }
 
   return (
     <>
-    <LinearProgress variant="determinate" value={40} />
-      <p>Route: {userPref.route}</p>
-
-      <h1>Direction: {localDirection}</h1>
 
       {direction.length > 0 ? (
         <div>
@@ -53,6 +60,8 @@ function Directions() {
             onClick={(event) => {
               setLocalDirection(event.target.value);
               setDirectionObj(direction[0]);
+              setDirectionLabel(event.target.value);
+              directionClicked(0);
             }}
             // id={direction[0].direction_id}
             value={direction[0].direction_name}
@@ -63,6 +72,8 @@ function Directions() {
             onClick={(event) => {
               setLocalDirection(event.target.value);
               setDirectionObj(direction[1]);
+              setDirectionLabel(event.target.value);
+              directionClicked(1);
             }}
             // id={direction[1].direction_id}
             value={direction[1].direction_name}
@@ -73,10 +84,10 @@ function Directions() {
       ) : (
         <span></span>
       )}
-      <div>
+      {/* <div>
         <button onClick={backButton}>Back</button>
         <button onClick={nextButton}>Next</button>
-      </div>
+      </div> */}
     </>
   );
 }

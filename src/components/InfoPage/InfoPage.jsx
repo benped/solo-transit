@@ -17,28 +17,192 @@ import Stops from "../Stops/Stops";
 import Summary from "../Summary/Summary";
 import stopSaga from "../../redux/sagas/stops.saga";
 
+// MUI IMPORTS
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepContent from "@mui/material/StepContent";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+
 function InfoPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const routes = useSelector((store) => store.routeReducer);
-  const userPref = useSelector((store) => store.userPrefReducer);
-  const direction = useSelector((store) => store.directionReducer);
   const stops = useSelector((store) => store.stopReducer);
+  const routes = useSelector((store) => store.routeReducer);
+  const [routeLabel, setRouteLabel] = useState("Route");
+  const [directionLabel, setDirectionLabel] = useState("Direction");
+  const [routeParam, setRouteParam] = useState("");
+  const [directionObj, setDirectionObj] = useState({});
+  const [selectedStop, setSelectedStop] = useState("");
+  const [stopLabel, setStopLabel] = useState("Stop");
+  const defaultStop = {
+    direction: 1
+  }
+  const [stop, setStop] = useState(defaultStop);
+  const [next, setNext] = useState(false);
+
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [notify_mode, setNotify_Mode] = useState('text');
+  // const updateStop = () => {
+  //   let found = stops.find(e => e.place_code === selectedStop);
+  //   console.log(found);
+  //   setStopLabel(found.description);
+  // }
 
   useEffect(() => {
     console.log("in useEffect");
     dispatch({ type: "FETCH_ROUTES" });
-    
+    console.log(stop);
+    console.log(stop.description);
   }, []);
 
   // console.log(newBusArr);
+  const summary = useSelector((store) => store.summaryReducer);
+
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  const handleNext = (index) => {
+    // console.log(routes);
+    // INSERT FINAL STEP ACTIONS HERE
+    if (index === steps.length - 1){
+      dispatch({
+        type: "CONFIRM_NEW_PREF",
+        payload: {
+          route_id: routeParam,
+          route_label: routeLabel,
+          direction_id: directionObj.direction_id,
+          direction_name: directionObj.direction_name,
+          place_code: stop.place_code,
+          description: stop.description,
+          time: notify.value,
+          phone: String(phone),
+          email: String(email),
+          notify_mode: notify_mode
+        }
+      });
+    }
+    // console.log(setps.length);
+    // console.log(index);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleReset = () => {   
+
+
+    setRouteLabel("Route");
+    setDirectionLabel("Direction");
+    setRouteParam("");
+    setDirectionObj({});
+    setSelectedStop("");
+    setStopLabel("Stop");
+    setStop("");
+    dispatch({type:"RESET_USER_PREF"});
+    setActiveStep(0);
+
+    history.push('/');
+  };
+
+  const steps = [
+    {
+      stepContent: (
+        <RouteList
+          routes={routes}
+          setRouteLabel={setRouteLabel}
+          setRouteParam={setRouteParam}
+          setNext={setNext}
+        />
+      ),
+      label: routeLabel,
+    },
+    {
+      stepContent: (
+        <Directions
+          setDirectionLabel={setDirectionLabel}
+          routeParam={routeParam}
+          setDirectionObj={setDirectionObj}
+          setNext={setNext}
+          directionLabel={directionLabel}
+        />
+      ),
+      label: directionLabel,
+    },
+    {
+      stepContent: (
+        <Stops
+          routeParam={routeParam}
+          directionObj={directionObj}
+          setStopLabel={setStopLabel}
+          setStop={setStop}
+          stop={stop}
+          setNext={setNext}
+        />
+      ),
+      label: "Stop: " + stop.description,
+    },
+    { stepContent: <Summary setNext={setNext} notify_mode={notify_mode} setNotify_Mode={setNotify_Mode}/>, label: "Notification" },
+  ];
 
   return (
     <div>
-        
+      <Box sx={{ maxWidth: 400 }}>
+        <Stepper activeStep={activeStep} orientation="vertical" required>
+          {steps.map((step, index) => (
+            <Step key={step.label}>
+              <StepLabel
+                optional={
+                  index === 3 ? (
+                    <Typography variant="caption">Last step</Typography>
+                  ) : null
+                }
+              >
+                {step.label}
+              </StepLabel>
+              <StepContent>
+                {step.stepContent}
+                <Box sx={{ mb: 2 }}>
+                  <div>
+                    <Button
+                      // disabled={next === false}
+                      variant="contained"
+                      onClick={() => {handleNext(index)}}
+                      sx={{ mt: 1, mr: 1 }}
+                    >
+                      {index === steps.length - 1 ? "Finish" : "Continue"}
+                    </Button>
+                    <Button
+                      disabled={index === 0}
+                      onClick={handleBack}
+                      sx={{ mt: 1, mr: 1 }}
+                    >
+                      Back
+                    </Button>
+                  </div>
+                </Box>
+              </StepContent>
+            </Step>
+          ))}
+        </Stepper>
+        {activeStep === steps.length && (
+          <Paper square elevation={0} sx={{ p: 3 }}>
+            <Typography>Route added!</Typography>
+            <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+              Home
+            </Button>
+          </Paper>
+        )}
+      </Box>
 
-      <Router>
+      {/* <Router>
         <div className="container">
 
           <Route path="/info/" exact>
@@ -58,7 +222,7 @@ function InfoPage() {
           </Route>
 
         </div>
-      </Router>
+      </Router> */}
     </div>
   );
 }

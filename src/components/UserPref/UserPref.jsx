@@ -44,7 +44,7 @@ function UserPref({ route }) {
 
   return (
     <>
-      <Card sx={{ maxWidth: 345, marginTop: 2, boxShadow: 3 }}>
+      <Card sx={{ maxWidth: 345, minWidth: 300, marginTop: 2, boxShadow: 3 }}>
         <CardActionArea>
           {/* <CardMedia
           component="img"

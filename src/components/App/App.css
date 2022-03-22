@@ -7,6 +7,10 @@ body,
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
+  background-image: linear-gradient(135deg, rgb(41, 41, 172) , rgb(255, 255, 223) );
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 img {

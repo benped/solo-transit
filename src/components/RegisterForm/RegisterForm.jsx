@@ -20,6 +20,10 @@ function RegisterForm() {
   }; // end registerUser
 
   return (
+    <>
+    
+   
+    
     <form className="formPanel" onSubmit={registerUser}>
       <h2>Register User</h2>
       {errors.registrationMessage && (
@@ -36,7 +40,7 @@ function RegisterForm() {
             value={username}
             required
             onChange={(event) => setUsername(event.target.value)}
-          />
+            />
         </label>
       </div>
       <div>
@@ -48,13 +52,14 @@ function RegisterForm() {
             value={password}
             required
             onChange={(event) => setPassword(event.target.value)}
-          />
+            />
         </label>
       </div>
       <div>
         <input className="btn" type="submit" name="submit" value="Register" />
       </div>
     </form>
+            </>
   );
 }
 

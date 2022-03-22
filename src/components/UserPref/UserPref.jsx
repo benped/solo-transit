@@ -42,16 +42,21 @@ function UserPref({ route }) {
     history.push(`/detail/${route.preference_id}`); // back to list
   };
 
+  const StyledOuterBox = styled(Box)`
+    border-radius: 20px;
+    position: absolute;
+  `;
+
+  const StyledInnerBox = styled(Box)`
+    border-radius: 10px;
+    position: relative;
+    bottom: 50px;
+  `;
+
   return (
     <>
       <Card sx={{ maxWidth: 345, minWidth: 300, marginTop: 2, boxShadow: 3 }}>
         <CardActionArea>
-          {/* <CardMedia
-          component="img"
-          height="40"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
-        /> */}
           <CardContent
             sx={{ display: "flex", justifyContent: "space-between" }}
           >

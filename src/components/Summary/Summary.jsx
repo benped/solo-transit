@@ -54,54 +54,55 @@ function Summary({ setNext }) {
     setNext(false);
   }, []);
 
-  const backButton = () => {
-    history.push("/info/stops");
-  };
+  // const backButton = () => {
+  //   history.push("/info/stops");
+  // };
 
-  const nextButton = () => {
-    console.log(summary);
-    console.log("inside confirm", notify.value);
-    dispatch({
-      type: "CONFIRM_NEW_PREF",
-      payload: {
-        route_id: route_id,
-        route_label: route_label,
-        direction_id: direction_id,
-        direction_name: direction_name,
-        place_code: place_code,
-        description: description,
-        time: notify.value,
-      },
-    });
-    dispatch({ type: "FETCH_USER_PREF" });
-    history.push("/");
-  };
+  // const nextButton = () => {
+  //   console.log(summary);
+  //   console.log("inside confirm", notify.value);
+  //   dispatch({
+  //     type: "CONFIRM_NEW_PREF",
+  //     payload: {
+  //       route_id: route_id,
+  //       route_label: route_label,
+  //       direction_id: direction_id,
+  //       direction_name: direction_name,
+  //       place_code: place_code,
+  //       description: description,
+  //       time: notify.value,
+  //     },
+  //   });
+  //   dispatch({ type: "FETCH_USER_PREF" });
+  //   history.push("/");
+  // };
 
   const deliverChange = (event, newAlignment) => {
+    console.log('inside delivery change, newAlignment is', newAlignment);
     setAlignment(newAlignment);
     if (newAlignment === "text") {
       notify_mode = "text";
     } else notify_mode = "email";
   };
 
-  const saveClicked = () => {
-    console.log("TIme is:", time);
-    console.log("Preference ID is", detail.preference_id);
-    if (alignment === "text") {
-      notify_mode = "text";
-    } else notify_mode = "email";
-    const payload = {
-      phone: String(phone),
-      email: String(email),
-      notify_mode: notify_mode,
-      time: time,
-      preference_id: detail.preference_id,
-    };
-    console.log("payload is", payload);
-    dispatch({ type: "UPDATE_NOTIFICATIONS", payload: payload });
-    dispatch({ type: "FETCH_USER_PREF" });
-    history.push("/");
-  };
+  // const saveClicked = () => {
+  //   console.log("TIme is:", time);
+  //   console.log("Preference ID is", detail.preference_id);
+  //   if (alignment === "text") {
+  //     notify_mode = "text";
+  //   } else notify_mode = "email";
+  //   const payload = {
+  //     phone: String(phone),
+  //     email: String(email),
+  //     notify_mode: notify_mode,
+  //     time: time,
+  //     preference_id: detail.preference_id,
+  //   };
+  //   console.log("payload is", payload);
+  //   dispatch({ type: "UPDATE_NOTIFICATIONS", payload: payload });
+  //   dispatch({ type: "FETCH_USER_PREF" });
+  //   history.push("/");
+  // };
 
   // place_code
 
@@ -131,8 +132,8 @@ function Summary({ setNext }) {
           exclusive
           onChange={deliverChange}
         >
-          <ToggleButton value="text">SMS</ToggleButton>
-          <ToggleButton value="email">Email</ToggleButton>
+          <ToggleButton value="text" disabled={alignment === 'text'}>SMS</ToggleButton>
+          <ToggleButton value="email" disabled={alignment === 'email'}>Email</ToggleButton>
         </ToggleButtonGroup>
         <Box
           sx={{

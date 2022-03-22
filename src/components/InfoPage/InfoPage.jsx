@@ -39,8 +39,15 @@ function InfoPage() {
   const [directionObj, setDirectionObj] = useState({});
   const [selectedStop, setSelectedStop] = useState("");
   const [stopLabel, setStopLabel] = useState("Stop");
-  const [stop, setStop] = useState("");
+  const defaultStop = {
+    direction: 1
+  }
+  const [stop, setStop] = useState(defaultStop);
+  const [next, setNext] = useState(false);
 
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [notify_mode, setNotify_Mode] = useState('text');
   // const updateStop = () => {
   //   let found = stops.find(e => e.place_code === selectedStop);
   //   console.log(found);
@@ -50,6 +57,8 @@ function InfoPage() {
   useEffect(() => {
     console.log("in useEffect");
     dispatch({ type: "FETCH_ROUTES" });
+    console.log(stop);
+    console.log(stop.description);
   }, []);
 
   // console.log(newBusArr);
@@ -71,6 +80,9 @@ function InfoPage() {
           place_code: stop.place_code,
           description: stop.description,
           time: notify.value,
+          phone: String(phone),
+          email: String(email),
+          notify_mode: notify_mode
         }
       });
     }
@@ -85,24 +97,8 @@ function InfoPage() {
   };
 
   const handleReset = () => {   
-    // console.log('INSIDE HANDLE RESET');
-     // INSERT FINAL STEP ACTIONS HERE
-    // if (index === steps.length - 1){
-    //   dispatch({
-    //     type: "CONFIRM_NEW_PREF",
-    //     payload: {
-    //       route_id: routeParam,
-    //       route_label: routeLabel,
-    //       direction_id: directionObj.direction_id,
-    //       direction_name: directionObj.direction_name,
-    //       place_code: stop.place_code,
-    //       description: stop.description,
-    //       time: notify.value,
-    //     }
-    //   });
-    // }
-    // console.log(setps.length);
-    // console.log(index);
+
+
     setRouteLabel("Route");
     setDirectionLabel("Direction");
     setRouteParam("");
@@ -112,6 +108,8 @@ function InfoPage() {
     setStop("");
     dispatch({type:"RESET_USER_PREF"});
     setActiveStep(0);
+
+    history.push('/');
   };
 
   const steps = [
@@ -121,6 +119,7 @@ function InfoPage() {
           routes={routes}
           setRouteLabel={setRouteLabel}
           setRouteParam={setRouteParam}
+          setNext={setNext}
         />
       ),
       label: routeLabel,
@@ -131,6 +130,8 @@ function InfoPage() {
           setDirectionLabel={setDirectionLabel}
           routeParam={routeParam}
           setDirectionObj={setDirectionObj}
+          setNext={setNext}
+          directionLabel={directionLabel}
         />
       ),
       label: directionLabel,
@@ -143,17 +144,18 @@ function InfoPage() {
           setStopLabel={setStopLabel}
           setStop={setStop}
           stop={stop}
+          setNext={setNext}
         />
       ),
-      label: "Stop: "+ stop.description,
+      label: "Stop: " + stop.description,
     },
-    { stepContent: <Summary />, label: "Notification" },
+    { stepContent: <Summary setNext={setNext} notify_mode={notify_mode} setNotify_Mode={setNotify_Mode}/>, label: "Notification" },
   ];
 
   return (
     <div>
       <Box sx={{ maxWidth: 400 }}>
-        <Stepper activeStep={activeStep} orientation="vertical">
+        <Stepper activeStep={activeStep} orientation="vertical" required>
           {steps.map((step, index) => (
             <Step key={step.label}>
               <StepLabel
@@ -170,6 +172,7 @@ function InfoPage() {
                 <Box sx={{ mb: 2 }}>
                   <div>
                     <Button
+                      // disabled={next === false}
                       variant="contained"
                       onClick={() => {handleNext(index)}}
                       sx={{ mt: 1, mr: 1 }}
@@ -191,9 +194,9 @@ function InfoPage() {
         </Stepper>
         {activeStep === steps.length && (
           <Paper square elevation={0} sx={{ p: 3 }}>
-            <Typography>All steps completed - you&apos;re finished</Typography>
+            <Typography>Route added!</Typography>
             <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-              Reset
+              Home
             </Button>
           </Paper>
         )}

@@ -178,11 +178,12 @@ CustomSelect.propTypes = {
   }),
 };
 
-export default function Stops({ routeParam, directionObj, setStopLabel, stop, setStop }) {
+export default function Stops({ routeParam, directionObj, setStopLabel, stop, setStop, setNext }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
     setStopLabel(stop.description);
+    // setNext(false);
     // dispatch({
     //   type: "GET_STOPS",
     //   payload: { direction: directionObj.direction_id, route: routeParam },
@@ -213,8 +214,8 @@ export default function Stops({ routeParam, directionObj, setStopLabel, stop, se
         ))}
       </CustomSelect>
 
-      <Paragraph>Selected character:</Paragraph>
-      <Pre>{JSON.stringify(stop, null, 2)}</Pre>
+      {/* <Paragraph>Selected character:</Paragraph>
+      <Pre>{JSON.stringify(stop, null, 2)}</Pre> */}
     </div>
   );
 }

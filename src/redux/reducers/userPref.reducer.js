@@ -16,7 +16,8 @@ const userPrefReducer = (
     // NEED TO INSERT STOP case
     case "SET_STOP_PREF":
       return { ...state, stop: action.payload };
-    case "SET_NOFITY_TIME":
+    case "RESET_USER_PREF":
+      return state = { route: "", direction: "", stop: "", time:"" }
     default:
       return state;
   }

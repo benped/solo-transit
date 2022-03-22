@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import RouteItem from "../RouteItem/RouteItem";
 
-function RouteList({ routes }) {
+function RouteList({ routes, setRouteLabel, setRouteParam, setNext }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [routeParam, setRouteParam] = useState()
+  
   const userPref = useSelector((store) => store.userPrefReducer);
   let newBusArr = routes.slice(9, 36);
-
+  
   const nextClicked = () => {
     history.push(`/info/directions/${routeParam}`);
   };
@@ -20,9 +20,9 @@ function RouteList({ routes }) {
 
       <h1>Selected Route: {userPref.route}</h1>
       {newBusArr.map((route, index) => {
-        return <RouteItem route={route} key={index} setRouteParam={setRouteParam}/>;
+        return <RouteItem route={route} key={index} setNext={setNext} setRouteParam={setRouteParam} setRouteLabel={setRouteLabel}/>;
       })}
-      <button onClick={nextClicked}>Next</button>
+      {/* <button onClick={nextClicked}>Next</button> */}
     </>
   );
 }

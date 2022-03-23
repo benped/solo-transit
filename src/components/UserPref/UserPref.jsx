@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 import { Button, CardActionArea, CardActions } from "@mui/material";
+import { blue } from "@mui/material/colors";
 
 function UserPref({ route }) {
   const dispatch = useDispatch();
@@ -42,35 +43,32 @@ function UserPref({ route }) {
     history.push(`/detail/${route.preference_id}`); // back to list
   };
 
-  const StyledOuterBox = styled(Box)`
-    border-radius: 20px;
-    position: absolute;
-  `;
 
-  const StyledInnerBox = styled(Box)`
-    border-radius: 10px;
-    position: relative;
-    bottom: 50px;
-  `;
 
   return (
     <>
-      <Card sx={{ maxWidth: 345, minWidth: 300, marginTop: 2, boxShadow: 3 }}>
+ 
+
+      <Card sx={{ maxWidth: 345, minWidth: 345, marginTop: 2, boxShadow: 3 }}>
         <CardActionArea>
-          <CardContent
-            sx={{ display: "flex", justifyContent: "space-between" }}
-          >
+          <Box
+            sx={{ display: "flex", justifyContent: "space-between", margin: 2 }}
+            >
             <Box>
               <Typography variant="h2" component="div">
                 {route.route_id}
               </Typography>
             </Box>
-            <Box sx={{ display: "inline", textAlign: "right" }}>
-              <Typography variant="body2" color="text.secondary">
-                Arriving: {arrival}
-              </Typography>
+            <Box sx={{ display: "inline", textAlign: "right", marginTop: 1 }}>
+            <Typography variant="body2" color="text.primay">
+              {route.description}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {route.direction_name}
+            </Typography>
+
             </Box>
-          </CardContent>
+          </Box>
         </CardActionArea>
         <CardActions
           sx={{
@@ -78,20 +76,18 @@ function UserPref({ route }) {
             justifyContent: "space-between",
             marginLeft: 1,
           }}
-        >
+          >
           <Box>
-            <Typography variant="body2" color="text.secondary">
-              {route.direction_name}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {route.description}
-            </Typography>
+          <Typography variant="body2" color="text.secondary">
+                Arriving: {arrival}
+              </Typography>
           </Box>
           <Button size="small" color="primary" onClick={UserPrefDetail}>
             Edit
           </Button>
         </CardActions>
       </Card>
+
     </>
   );
 }

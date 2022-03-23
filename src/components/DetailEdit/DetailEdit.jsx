@@ -67,19 +67,46 @@ function DetailEdit({ setEdit }) {
   return (
     <Paper sx={{ m: 1 }} elevation={4}>
       {/* <Box component="svg" sx={{ width: 100, height: 100 }}> */}
-      <Button ml={2} onClick={() => setEdit(false)} variant="text">
+      <Button sx={{ m: 2 }} onClick={() => history.push("/")} variant="text">
         Back
       </Button>
-      <Stack mr={2} spacing={12} direction="row">
-        <Box direction="row">
-          <Typography variant="h2">{detail.route_id}</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: 3,
+        }}
+      >
+        <Box
+          sx={{
+            display: "inline",
+            textAlign: "left",
+            marginTop: 1,
+            marginLeft: 3,
+          }}
+        >
+          <Typography variant="h1" component="div">
+            {detail.route_id}
+          </Typography>
         </Box>
-        <Box>
-          <h5>{detail.description}</h5>
-          <p>heading</p>
-          <h5>{detail.direction_name}</h5>
+        <Box
+          sx={{
+            display: "inline",
+            textAlign: "left",
+            marginTop: 1,
+            marginLeft: 3,
+          }}
+        >
+          <Typography variant="h5" color="text.primay">
+            {detail.description}
+          </Typography>
+          <Typography variant="h6" color="text.secondary">
+            {detail.direction_name}
+          </Typography>
         </Box>
-      </Stack>
+      </Box>
+
       <Box
         sx={{
           display: "flex",
@@ -145,14 +172,23 @@ function DetailEdit({ setEdit }) {
             />
           )}
         </Box>
-        <Button onClick={() => saveClicked()}>Save</Button>
+        <Button variant="contained" onClick={() => saveClicked()}>Save</Button>
       </Box>
 
-      <Stack m={10} justifyContent="center" direction="row">
+      <Box
+        sx={{
+          padding: 3,
+          marginTop: 4,
+          justifyContent: "center",
+          direction: "row",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <Button onClick={() => deleteClicked()} color="error">
           Delete Route
         </Button>
-      </Stack>
+      </Box>
       {/* </Box> */}
     </Paper>
   );

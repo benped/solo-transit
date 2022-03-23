@@ -19,7 +19,6 @@ function Detail() {
   const { id } = useParams();
   const detail = useSelector((store) => store.detailReducer);
   const arrival = useSelector((store) => store.arrivalReducer);
-  const [edit, setEdit] = useState(false);
 
   const [checked, setChecked] = useState(false);
 
@@ -38,23 +37,11 @@ function Detail() {
 
   return (
     <>
-      {edit === false ? (
+
         <div>
-          <Stack mr={2} ml={2} spacing={12} direction="row" justifyContent="space-between">
-            <Button variant="text" onClick={() => backButton()}>Back</Button>
-            <Button variant="contained" onClick={() => setEdit(true)}>Edit</Button>
-          </Stack>
-          <h1> <DirectionsBusIcon/> {detail.route_id}</h1>
-          <p>Arrives in: {arrival.arrival}</p>
-          <p> {detail.description}</p>
-          <p>{detail.direction_name}</p>
-          <p>Notify At: {detail.time}</p>
+          <DetailEdit />
         </div>
-      ) : (
-        <div>
-          <DetailEdit setEdit={setEdit} />
-        </div>
-      )}
+
     </>
   );
 }

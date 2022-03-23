@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 function Directions({setDirectionLabel, directionLabel, setDirectionObj, routeParam, setNext}) {
   const dispatch = useDispatch();
   const direction = useSelector((store) => store.directionReducer);
-  const route = useSelector((store) => store.userPrefReducer.route);
-  const history = useHistory();
+  // const route = useSelector((store) => store.userPrefReducer.route);
+  // const history = useHistory();
   const userPref = useSelector((store) => store.userPrefReducer);
   // const { routeParam } = useParams();
   const [localDirection, setLocalDirection] = useState();
@@ -18,29 +18,12 @@ function Directions({setDirectionLabel, directionLabel, setDirectionObj, routePa
   useEffect(() => {
     console.log("in direction useEffect, route Param is", routeParam);
     console.log("in direction useEffect, userPref Route is", userPref.route);
-    if (directionLabel !== direction[0].direction_name || directionLabel !== direction[1].direction_name){
+    if (directionLabel === "Direction" ){
       setNext(false);}
 
-    // dispatch({ type: "GET_DIRECTION", payload: routeParam });
   }, []);
 
-  // console.log("user pref is ", userPref);
-  // const getStops = (id) => {
-  //   console.log("inside getStops dirction is:", direction[id]);
-  //   dispatch({
-  //     type: "GET_STOPS",
-  //     payload: { direction: direction[id], route: route},
-  //   });
-  // };
 
-  // const backButton = () => {
-  //   history.push(`/info/`);
-  // };
-
-  // const nextButton = () => {
-  //   console.log(directionObj.direction_id);
-  //   history.push(`/info/directions/stops/${routeParam}/${directionObj.direction_id}`)
-  // };
 
   const directionClicked = async (direction_id) => {
     

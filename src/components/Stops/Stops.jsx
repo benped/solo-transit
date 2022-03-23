@@ -183,7 +183,7 @@ export default function Stops({ routeParam, directionObj, setStopLabel, stop, se
 
   useEffect(() => {
     setStopLabel(stop.description);
-    // setNext(false);
+    setNext(false);
     // dispatch({
     //   type: "GET_STOPS",
     //   payload: { direction: directionObj.direction_id, route: routeParam },
@@ -201,7 +201,7 @@ export default function Stops({ routeParam, directionObj, setStopLabel, stop, se
   };
 
   return (
-    <div>
+    <div onClick={() => setNext(true)}>
       <CustomSelect
         value={stop}
         onChange={setStop}
@@ -219,6 +219,8 @@ export default function Stops({ routeParam, directionObj, setStopLabel, stop, se
     </div>
   );
 }
+
+
 
 // function Stops({ routeParam, directionObj, "Available Stops..." }) {
 //   const dispatch = useDispatch();

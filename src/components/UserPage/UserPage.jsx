@@ -41,7 +41,7 @@ function UserPage() {
   return (
     <>
       <div className="container">
-        <h2>Welcome, {user.username}!</h2>
+        <h2>Welcome, <br/>{user.username}!</h2>
         
         {/* Add in to ternary for no routes here */}
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>

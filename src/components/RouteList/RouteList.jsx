@@ -18,7 +18,7 @@ function RouteList({ routes, setRouteLabel, setRouteParam, setNext }) {
   return (
     <>
       {/* <LinearProgress variant="determinate" value={10} /> */}
-      <h1>Selected Route: {userPref.route}</h1>
+      {/* <h1>Selected Route: {userPref.route}</h1> */}
       {newBusArr.map((route, index) => {
         return <RouteItem route={route} key={index} setNext={setNext} setRouteParam={setRouteParam} setRouteLabel={setRouteLabel}/>;
       })}

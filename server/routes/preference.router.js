@@ -113,7 +113,7 @@ router.post("/", async (req, res) => {
     pool.query(queryText, queryInsert);
     res.sendStatus(200);
   } catch (error) {
-    console.log("Error is", err);
+    console.log("Error is", error);
     res.sendStatus(500);
   }
 });

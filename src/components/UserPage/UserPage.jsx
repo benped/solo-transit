@@ -7,19 +7,19 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
 import UserPref from "../UserPref/UserPref.jsx";
 import "../UserPref/UserPref.css";
 
 const fabStyle = {
   margin: 0,
-  top: 'auto',
-  left: 'auto',
+  top: "auto",
+  left: "auto",
   bottom: 20,
   right: 20,
-  position: 'fixed',
+  position: "fixed",
 };
 
 function UserPage() {
@@ -41,19 +41,29 @@ function UserPage() {
   return (
     <>
       <div className="container">
-        <h2>Welcome, <br/>{user.username}!</h2>
-        
         {/* Add in to ternary for no routes here */}
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{ minWidth: 345 }}>
+            <Typography align="left" variant="h3">
+              Welcome, <br />
+              {user.username}!
+            </Typography>
+          </Box>
 
-        {userRoutes.length > 0 && 
-        userRoutes.map((route, i) => {
-          return <UserPref route={route} key={i} />;
-        })}
+          {userRoutes.length > 0 &&
+            userRoutes.map((route, i) => {
+              return <UserPref route={route} key={i} />;
+            })}
         </Box>
         <Fab sx={fabStyle} color="primary" aria-label="add">
-        <AddIcon onClick={() => history.push('/addRoute')}/>
-      </Fab>
+          <AddIcon onClick={() => history.push("/addRoute")} />
+        </Fab>
         {/* {/* <LogOutButton className="btn" /> */}
       </div>
     </>

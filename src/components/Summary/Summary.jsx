@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 
 import Typography from "@mui/material/Typography";
 
-function Summary({ setNext }) {
+function Summary({ setNext, setTimeChecker, setTextField }) {
   const dispatch = useDispatch();
   // const userPref = useSelector((store) => store.userPrefReducer);
   const summary = useSelector((store) => store.summaryReducer);
@@ -22,16 +22,16 @@ function Summary({ setNext }) {
 
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [textField, setTextField] = useState(false);
-  const [timeChecker, setTimeChecker] = useState(false);
+  // const [textField, setTextField] = useState(false);
+  // const [timeChecker, setTimeChecker] = useState(false);
   let notify_mode;
 
   useEffect(() => {
     console.log("in summary useEffect");
     setNext(false);
-    if (textField === true && timeChecker === true) {
-      setNext(true);
-    }
+    // if (textField === true && timeChecker === true) {
+    //   setNext(true);
+    // }
   }, []);
 
   const deliverChange = (event, newAlignment) => {
@@ -56,8 +56,7 @@ function Summary({ setNext }) {
           When do you want to be notified?
         </Typography>
 
-        <input
-          onChange={() => setTimeChecker(true)}
+        <input        
           type="time"
           id="notify"
           name="notify"
@@ -91,7 +90,8 @@ function Summary({ setNext }) {
               variant="standard"
               onChange={(event) => {
                 setPhone(event.target.value);
-                setTextField(true);
+                console.log('inside phone field on change');
+                setNext(true);
               }}
             />
           ) : (
@@ -100,9 +100,11 @@ function Summary({ setNext }) {
               label="Email"
               variant="standard"
               value={email}
+              
               onChange={(event) => {
+                console.log('inside text field on change');
                 setEmail(event.target.value);
-                setTextField(true);
+                setNext(true)
               }}
             />
           )}

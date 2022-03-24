@@ -43,6 +43,15 @@ function UserPref({ route }) {
     history.push(`/detail/${route.preference_id}`); // back to list
   };
 
+  const sendText = () => {
+    dispatch({type:"TEXT_ME", payload: {
+      departure_text:arrival,
+      route_label: route.route_label,
+      direction_name: route.direction_name,
+      phone: 2626744046
+    }})
+  }
+
   return (
     <>
       <Card sx={{ maxWidth: 345, minWidth: 345, marginTop: 2, boxShadow: 3 }}>
@@ -79,7 +88,7 @@ function UserPref({ route }) {
           }}
         >
           <Box>
-            <Typography variant="body2" color="text.secondary">
+            <Typography onClick={()=> sendText()}variant="body2" color="text.secondary">
               Arriving: {arrival}
             </Typography>
           </Box>

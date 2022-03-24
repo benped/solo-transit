@@ -9,7 +9,7 @@ import confirmSaga from './confirm.saga';
 import userPrefSaga from './userPref.saga';
 import detailSaga from './detail.saga';
 import summarySaga from './summaryBundle.saga';
-
+import notificationSaga from './notification.saga';
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
@@ -29,5 +29,6 @@ export default function* rootSaga() {
     userPrefSaga(),
     detailSaga(),
     summarySaga(),
+    notificationSaga(),
   ]);
 }

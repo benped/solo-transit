@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function* textMe(action){
     console.log('INside textMe SAGA',action.payload);
-    let text = `Next Bus: ${action.payload.stop.departure_text} Route: ${action.payload.stop.route_short_name} Direction: ${action.payload.stop.direction_text}`;
+    let text = `Next Bus: ${action.payload.departure_text} Route: ${action.payload.route_label} Direction: ${action.payload.direction_name}`;
     console.log('text is', {text: text, phone: Number(action.payload.phone)});
     
     try {

@@ -50,6 +50,7 @@ function DetailEdit({ setEdit }) {
     console.log("payload is", payload);
     dispatch({ type: "UPDATE_NOTIFICATIONS", payload: payload });
     dispatch({ type: "FETCH_USER_PREF" });
+    
     history.push("/");
   };
   const [alignment, setAlignment] = useState("text");

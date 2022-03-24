@@ -5,15 +5,15 @@ import { useState, useEffect } from "react";
 import RouteItem from "../RouteItem/RouteItem";
 
 function RouteList({ routes, setRouteLabel, setRouteParam, setNext }) {
-  const dispatch = useDispatch();
-  const history = useHistory();
+  // const dispatch = useDispatch();
+  // const history = useHistory();
   
-  const userPref = useSelector((store) => store.userPrefReducer);
-  let newBusArr = routes.slice(9, 36);
+  // const userPref = useSelector((store) => store.userPrefReducer);
+  let newBusArr = routes.slice(0, 36);
   
-  const nextClicked = () => {
-    history.push(`/info/directions/${URLrouteParam}`);
-  };
+  // const nextClicked = () => {
+  //   history.push(`/info/directions/${URLrouteParam}`);
+  // };
 
   return (
     <>

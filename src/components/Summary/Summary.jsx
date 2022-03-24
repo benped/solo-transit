@@ -8,38 +8,27 @@ import TextField from "@mui/material/TextField";
 
 import Box from "@mui/material/Box";
 
-import Button from "@mui/material/Button";
 
 import Typography from "@mui/material/Typography";
 
-function Summary({ setNext }) {
+function Summary({ setNext, setNumber, setEmail, setNotify_Mode, notify_mode }) {
   const dispatch = useDispatch();
-  // const userPref = useSelector((store) => store.userPrefReducer);
-  const summary = useSelector((store) => store.summaryReducer);
 
-  const history = useHistory();
   const [alignment, setAlignment] = useState("text");
 
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [textField, setTextField] = useState(false);
-  const [timeChecker, setTimeChecker] = useState(false);
-  let notify_mode;
 
   useEffect(() => {
     console.log("in summary useEffect");
     setNext(false);
-    if (textField === true && timeChecker === true) {
-      setNext(true);
-    }
+
   }, []);
 
   const deliverChange = (event, newAlignment) => {
     console.log("inside delivery change, newAlignment is", newAlignment);
     setAlignment(newAlignment);
     if (newAlignment === "text") {
-      notify_mode = "text";
-    } else notify_mode = "email";
+      setNotify_Mode("text");
+    } else setNotify_Mode("email");
   };
 
   return (
@@ -56,8 +45,7 @@ function Summary({ setNext }) {
           When do you want to be notified?
         </Typography>
 
-        <input
-          onChange={() => setTimeChecker(true)}
+        <input        
           type="time"
           id="notify"
           name="notify"
@@ -90,8 +78,9 @@ function Summary({ setNext }) {
               label="phone"
               variant="standard"
               onChange={(event) => {
-                setPhone(event.target.value);
-                setTextField(true);
+                console.log('inside phone field on change');
+                setNext(true);
+                setNumber(event.target.value);
               }}
             />
           ) : (
@@ -99,10 +88,12 @@ function Summary({ setNext }) {
               id="standard-basic"
               label="Email"
               variant="standard"
-              value={email}
+              // value={email}
+              
               onChange={(event) => {
+                console.log('inside text field on change');
                 setEmail(event.target.value);
-                setTextField(true);
+                setNext(true)
               }}
             />
           )}

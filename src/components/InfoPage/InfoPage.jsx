@@ -46,9 +46,12 @@ function InfoPage() {
   const [stop, setStop] = useState("Stop");
   const [next, setNext] = useState(false);
 
-  const [phone, setPhone] = useState("");
+  const [phone, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [notify_mode, setNotify_Mode] = useState("text");
+
+  const [textField, setTextField] = useState(false);
+  const [timeChecker, setTimeChecker] = useState(false);
   // const updateStop = () => {
   //   let found = stops.find(e => e.place_code === selectedStop);
   //   console.log(found);
@@ -153,6 +156,10 @@ function InfoPage() {
           setNext={setNext}
           notify_mode={notify_mode}
           setNotify_Mode={setNotify_Mode}
+          setTextField={setTextField}
+          setTimeChecker={setTimeChecker}
+          setNumber={setNumber}
+          setEmail={setEmail}
         />
       ),
       label: "Notification",

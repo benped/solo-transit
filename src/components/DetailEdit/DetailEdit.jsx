@@ -50,7 +50,7 @@ function DetailEdit({ setEdit }) {
     console.log("payload is", payload);
     dispatch({ type: "UPDATE_NOTIFICATIONS", payload: payload });
     dispatch({ type: "FETCH_USER_PREF" });
-    
+
     history.push("/");
   };
   const [alignment, setAlignment] = useState("text");
@@ -87,9 +87,15 @@ function DetailEdit({ setEdit }) {
             marginLeft: 3,
           }}
         >
-          <Typography variant="h1" component="div">
-            {detail.route_id}
-          </Typography>
+          {detail.route_id > 886 && detail.route_id < 924 ? (
+            <Typography variant="h3" component="div">
+              {detail.route_label}
+            </Typography>
+          ) : (
+            <Typography variant="h2" component="div">
+              {detail.route_id}
+            </Typography>
+          )}
         </Box>
         <Box
           sx={{
@@ -173,7 +179,9 @@ function DetailEdit({ setEdit }) {
             />
           )}
         </Box>
-        <Button variant="contained" onClick={() => saveClicked()}>Save</Button>
+        <Button variant="contained" onClick={() => saveClicked()}>
+          Save
+        </Button>
       </Box>
 
       <Box

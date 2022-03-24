@@ -37,7 +37,7 @@ function* deletePref(payload) {
     
     const response = yield axios.delete(`/api/preference/${payload.payload}`)
     console.log('Response is', response);
-    
+    yield put({type: "FETCH_USER_PREF"})
   } catch {
     console.log('error on delete pref');
     

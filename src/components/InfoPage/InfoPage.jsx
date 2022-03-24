@@ -33,6 +33,7 @@ function InfoPage() {
 
   const stops = useSelector((store) => store.stopReducer);
   const routes = useSelector((store) => store.routeReducer);
+  
   const [routeLabel, setRouteLabel] = useState("Route");
   const [directionLabel, setDirectionLabel] = useState("Direction");
   const [routeParam, setRouteParam] = useState("");
@@ -40,14 +41,17 @@ function InfoPage() {
   const [selectedStop, setSelectedStop] = useState("");
   const [stopLabel, setStopLabel] = useState("Stop");
   const defaultStop = {
-    direction: 1
-  }
-  const [stop, setStop] = useState(defaultStop);
+    direction: 1,
+  };
+  const [stop, setStop] = useState("Stop");
   const [next, setNext] = useState(false);
 
-  const [phone, setPhone] = useState("");
+  const [phone, setNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [notify_mode, setNotify_Mode] = useState('text');
+  const [notify_mode, setNotify_Mode] = useState("text");
+
+  const [textField, setTextField] = useState(false);
+  const [timeChecker, setTimeChecker] = useState(false);
   // const updateStop = () => {
   //   let found = stops.find(e => e.place_code === selectedStop);
   //   console.log(found);
@@ -69,7 +73,7 @@ function InfoPage() {
   const handleNext = (index) => {
     // console.log(routes);
     // INSERT FINAL STEP ACTIONS HERE
-    if (index === steps.length - 1){
+    if (index === steps.length - 1) {
       dispatch({
         type: "CONFIRM_NEW_PREF",
         payload: {
@@ -82,23 +86,20 @@ function InfoPage() {
           time: notify.value,
           phone: String(phone),
           email: String(email),
-          notify_mode: notify_mode
-        }
+          notify_mode: notify_mode,
+        },
       });
     }
     // console.log(setps.length);
     // console.log(index);
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {   
-
-
+  const handleReset = () => {
     setRouteLabel("Route");
     setDirectionLabel("Direction");
     setRouteParam("");
@@ -106,10 +107,10 @@ function InfoPage() {
     setSelectedStop("");
     setStopLabel("Stop");
     setStop("");
-    dispatch({type:"RESET_USER_PREF"});
+    dispatch({ type: "RESET_USER_PREF" });
     setActiveStep(0);
 
-    history.push('/');
+    history.push("/");
   };
 
   const steps = [
@@ -147,17 +148,34 @@ function InfoPage() {
           setNext={setNext}
         />
       ),
-      label: "Stop: " + stop.description,
+      label: "Stop",
     },
-    { stepContent: <Summary setNext={setNext} notify_mode={notify_mode} setNotify_Mode={setNotify_Mode}/>, label: "Notification" },
+    {
+      stepContent: (
+        <Summary
+          setNext={setNext}
+          notify_mode={notify_mode}
+          setNotify_Mode={setNotify_Mode}
+          setTextField={setTextField}
+          setTimeChecker={setTimeChecker}
+          setNumber={setNumber}
+          setEmail={setEmail}
+        />
+      ),
+      label: "Notification",
+    },
   ];
 
   return (
     <div>
-      <Box sx={{ maxWidth: 400 }}>
+      <Box
+        sx={{
+          paddingLeft: 5,
+        }}
+      >
         <Stepper activeStep={activeStep} orientation="vertical" required>
           {steps.map((step, index) => (
-            <Step key={step.label}>
+            <Step key={step.label} >
               <StepLabel
                 optional={
                   index === 3 ? (
@@ -165,16 +183,30 @@ function InfoPage() {
                   ) : null
                 }
               >
-                {step.label}
+                {activeStep === index ? (
+                  <Typography variant="h3">{step.label}</Typography>
+                ) : (
+                  <Typography>{step.label}</Typography>
+                )}
               </StepLabel>
               <StepContent>
                 {step.stepContent}
-                <Box sx={{ mb: 2 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "left",
+                    alignItems: "center",
+                    marginBottom: 2,
+                    marginTop: 3
+                  }}
+                >
                   <div>
                     <Button
-                      // disabled={next === false}
+                      disabled={next === false}
                       variant="contained"
-                      onClick={() => {handleNext(index)}}
+                      onClick={() => {
+                        handleNext(index);
+                      }}
                       sx={{ mt: 1, mr: 1 }}
                     >
                       {index === steps.length - 1 ? "Finish" : "Continue"}
@@ -193,36 +225,14 @@ function InfoPage() {
           ))}
         </Stepper>
         {activeStep === steps.length && (
-          <Paper square elevation={0} sx={{ p: 3 }}>
-            <Typography>Route added!</Typography>
-            <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+          <Paper  square elevation={0} sx={{ p: 3, backgroundColor:"rgba(52, 52, 52, 0)" }}>
+            <Typography variant="h2" >Route added!</Typography>
+            <Button variant="contained" onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
               Home
             </Button>
           </Paper>
         )}
       </Box>
-
-      {/* <Router>
-        <div className="container">
-
-          <Route path="/info/" exact>
-            <RouteList routes={routes} />
-          </Route>
-
-          <Route path="/info/directions/:routeParam/" exact>
-            <Directions />
-          </Route>
-
-          <Route path="/info/directions/stops/:routeParam/:directionParam" exact >
-            <Stops />
-          </Route>
-
-          <Route path="/info/directions/stops/summary/:routeParam/:directionParam/:placeCode" exact>
-            <Summary />
-          </Route>
-
-        </div>
-      </Router> */}
     </div>
   );
 }

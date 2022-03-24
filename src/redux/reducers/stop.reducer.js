@@ -1,5 +1,5 @@
 
-const stopReducer = (state = [], action) => {
+const stopReducer = (state = [{description:'Stop'}], action) => {
     switch (action.type) {
       case 'SET_STOPS':
         return action.payload;

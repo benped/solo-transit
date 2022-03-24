@@ -59,7 +59,7 @@ function UserPref({ route }) {
             sx={{ display: "flex", justifyContent: "space-between", margin: 2 }}
           >
             <Box sx={{marginTop: 1}}>
-              {route.route_id > 887 && route.route_id < 924 ? (
+              {route.route_id > 886 && route.route_id < 924 ? (
                 <Typography variant="h5" component="div">
                   {route.route_label}
                 </Typography>

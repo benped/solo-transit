@@ -46,7 +46,7 @@ function InfoPage() {
   const [stop, setStop] = useState("Stop");
   const [next, setNext] = useState(false);
 
-  const [phone, setPhone] = useState("");
+  const [phone, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [notify_mode, setNotify_Mode] = useState("text");
 
@@ -158,6 +158,8 @@ function InfoPage() {
           setNotify_Mode={setNotify_Mode}
           setTextField={setTextField}
           setTimeChecker={setTimeChecker}
+          setNumber={setNumber}
+          setEmail={setEmail}
         />
       ),
       label: "Notification",

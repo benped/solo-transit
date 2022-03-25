@@ -26,7 +26,7 @@ function Detail() {
   useEffect(() => {
     dispatch({ type: "GET_DETAIL", payload: id });
     console.log('inside detail edit. detail is', detail);
-    console.log('userRoutes is', userRoutes);
+    console.log('userRoutes are', userRoutes);
     const route = userRoutes.find(e => e.preference_id == id);
     console.log(route);
     setPhone(route.phone);

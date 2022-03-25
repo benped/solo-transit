@@ -26,14 +26,6 @@ function Detail() {
     dispatch({ type: "GET_DETAIL", payload: id });
   }, []);
 
-  const backButton = () => {
-    console.log("Inside back button");
-    history.push("/");
-  };
-
-  const handleChange = () => {
-    setChecked((prev) => !prev);
-  };
 
   return (
     <>

@@ -19,6 +19,7 @@ function AboutPage() {
         <li>Sagas</li>
         <li>Redux</li>
         <li>Material UI</li>
+        <li>Node-Cron</li>
         </ul>
 
         <h2>APIs</h2>
@@ -26,6 +27,7 @@ function AboutPage() {
         <li>Metro Transit NexTrip</li>
         <li>Twilio</li>
         </ul>
+
       </div>
     </div>
   );

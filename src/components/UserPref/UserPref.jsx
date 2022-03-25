@@ -39,7 +39,7 @@ function UserPref({ route }) {
   };
 
   const UserPrefDetail = () => {
-    history.push(`/detail/${route.preference_id}`); // back to list
+    history.push(`/detail/${route.preference_id}`); // to detail view
   };
 
   const sendText = () => {

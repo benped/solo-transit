@@ -12,7 +12,7 @@ function Footer() {
   return (
     <>
       <footer>
-        <Typography>&copy; Pedrick Solo Project</Typography>
+        <Typography>2022 - Pedrick Solo Project</Typography>
         <Link className="navLink" to="/about">
           <Typography>About this project</Typography>
         </Link>

@@ -68,6 +68,7 @@ function LoginForm() {
             autoComplete="off"
           >
             <TextField
+            autoComplete="off"
               id="standard-basic"
               label="Username"
               htmlFor="username"
@@ -89,6 +90,7 @@ function LoginForm() {
             autoComplete="off"
           >
             <TextField
+            autoComplete="off"
               required
               id="standard-basic"
               label="Password"

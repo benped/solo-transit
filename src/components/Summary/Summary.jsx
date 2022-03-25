@@ -74,6 +74,7 @@ function Summary({ setNext, setNumber, setEmail, setNotify_Mode, notify_mode }) 
         <Box>
           {alignment == "text" ? (
             <TextField
+            autoComplete="off"
               type="number"
               label="phone"
               variant="standard"
@@ -85,6 +86,7 @@ function Summary({ setNext, setNumber, setEmail, setNotify_Mode, notify_mode }) 
             />
           ) : (
             <TextField
+            autoComplete="off"
               id="standard-basic"
               label="Email"
               variant="standard"

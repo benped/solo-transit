@@ -11,13 +11,13 @@ import {
 } from "react-router-dom";
 
 import RouteList from "../RouteList/RouteList";
-
 import Directions from "../Directions/Directions";
 import Stops from "../Stops/Stops";
 import Summary from "../Summary/Summary";
 import stopSaga from "../../redux/sagas/stops.saga";
 
 // MUI IMPORTS
+import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -26,6 +26,17 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import ClearIcon from '@mui/icons-material/Clear';
+
+const fabStyle = {
+  margin: 0,
+  top: "auto",
+  left: "auto",
+  bottom: 20,
+  right: 20,
+  position: "fixed",
+};
+
 
 function InfoPage() {
   const dispatch = useDispatch();
@@ -52,11 +63,7 @@ function InfoPage() {
 
   const [textField, setTextField] = useState(false);
   const [timeChecker, setTimeChecker] = useState(false);
-  // const updateStop = () => {
-  //   let found = stops.find(e => e.place_code === selectedStop);
-  //   console.log(found);
-  //   setStopLabel(found.description);
-  // }
+
 
   useEffect(() => {
     console.log("in useEffect");
@@ -233,6 +240,9 @@ function InfoPage() {
           </Paper>
         )}
       </Box>
+      <Fab sx={fabStyle} color="error" aria-label="add" >
+          <ClearIcon onClick={() => {handleReset(); history.push('/')}} />
+        </Fab>
     </div>
   );
 }

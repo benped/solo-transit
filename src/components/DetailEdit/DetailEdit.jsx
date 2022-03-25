@@ -2,33 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom";
-import axios from "axios";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from "@mui/material/TextField";
 
 import Box from "@mui/material/Box";
-import Switch from "@mui/material/Switch";
 import Paper from "@mui/material/Paper";
-import Slide from "@mui/material/Slide";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import Typography from "@mui/material/Typography";
-import TimePicker from "@mui/lab/TimePicker";
 
 function DetailEdit({ setEdit }) {
   const detail = useSelector((store) => store.detailReducer);
   const [time, setTime] = useState(detail.time);
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(Number(detail.phone));
+  const [email, setEmail] = useState(String(detail.email));
   const history = useHistory();
   const dispatch = useDispatch();
   let notify_mode;
 
   useEffect(() => {
+    console.log('inside detail edit. detail is', detail);
     // setUpFunction();
     // getRoutes();
     // setRoute(detail.route_id);
@@ -167,13 +160,17 @@ function DetailEdit({ setEdit }) {
               type="number"
               label="phone"
               variant="standard"
+              autoComplete="off"
+              value={phone}
               onChange={(event) => setPhone(event.target.value)}
+              // onChange={() => console.log(detail)}
             />
           ) : (
             <TextField
               id="standard-basic"
               label="Email"
               variant="standard"
+              autoComplete="off"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />

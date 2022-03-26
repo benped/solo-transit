@@ -167,6 +167,8 @@ function InfoPage() {
           setTimeChecker={setTimeChecker}
           setNumber={setNumber}
           setEmail={setEmail}
+          phone={phone}
+          email={email}
         />
       ),
       label: "Notification",

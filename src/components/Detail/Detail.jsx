@@ -41,11 +41,12 @@ function Detail() {
   const saveClicked = () => {
     console.log("TIme is:", time);
     console.log("Preference ID is", detail.preference_id);
+    // Checks what what is preferred Here
     if (alignment === "text") {
       notify_mode = "text";
     } else notify_mode = "email";
     const payload = {
-      phone: String(phone),
+      phone: String(phone), // keeping this a number gave me out of range errors
       email: String(email),
       notify_mode: notify_mode,
       time: time,

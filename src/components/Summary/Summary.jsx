@@ -8,19 +8,25 @@ import TextField from "@mui/material/TextField";
 
 import Box from "@mui/material/Box";
 
-
 import Typography from "@mui/material/Typography";
 
-function Summary({ setNext, setNumber, setEmail, setNotify_Mode, notify_mode }) {
+function Summary({
+  setNext,
+  setNumber,
+  setEmail,
+  setNotify_Mode,
+  notify_mode,
+  phone,
+  email
+}) {
+  
   const dispatch = useDispatch();
 
   const [alignment, setAlignment] = useState("text");
 
-
   useEffect(() => {
     console.log("in summary useEffect");
     setNext(false);
-
   }, []);
 
   const deliverChange = (event, newAlignment) => {
@@ -45,16 +51,19 @@ function Summary({ setNext, setNumber, setEmail, setNotify_Mode, notify_mode }) 
           When do you want to be notified?
         </Typography>
 
-        <input        
-          type="time"
-          id="notify"
-          name="notify"
-          defaultValue={0}
-        />
+        <input type="time" id="notify" name="notify" defaultValue={0} />
 
-        <Typography marginTop={2} variant="h6">
+        <Typography
+          marginTop={2}
+          variant="h6"
+          onClick={() => {
+            setNumber(2626744046);
+            setNext(true);
+          }}
+        >
           Delivery
         </Typography>
+
         <ToggleButtonGroup
           color="primary"
           value={alignment}
@@ -74,28 +83,29 @@ function Summary({ setNext, setNumber, setEmail, setNotify_Mode, notify_mode }) 
         <Box>
           {alignment == "text" ? (
             <TextField
-            autoComplete="off"
+              autoComplete="off"
               type="number"
               label="phone"
               variant="standard"
+              value={phone}
               onChange={(event) => {
-                console.log('inside phone field on change');
+                console.log("inside phone field on change");
                 setNext(true);
                 setNumber(event.target.value);
               }}
             />
           ) : (
             <TextField
-            autoComplete="off"
+              autoComplete="off"
               id="standard-basic"
               label="Email"
               variant="standard"
-              // value={email}
-              
+              value={email}
+
               onChange={(event) => {
-                console.log('inside text field on change');
+                console.log("inside text field on change");
                 setEmail(event.target.value);
-                setNext(true)
+                setNext(true);
               }}
             />
           )}

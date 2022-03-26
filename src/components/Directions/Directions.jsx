@@ -2,6 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Stack from '@mui/material/Stack';
+
 function Directions({setDirectionLabel, directionLabel, setDirectionObj, routeParam, setNext}) {
   const dispatch = useDispatch();
   const direction = useSelector((store) => store.directionReducer);
@@ -39,7 +43,9 @@ function Directions({setDirectionLabel, directionLabel, setDirectionObj, routePa
 
       {direction.length > 0 ? (
         <div>
-          <button
+          <Stack spacing={2} m={2}>
+
+          <Button
             onClick={(event) => {
               setLocalDirection(event.target.value);
               setDirectionObj(direction[0]);
@@ -48,10 +54,10 @@ function Directions({setDirectionLabel, directionLabel, setDirectionObj, routePa
             }}
             // id={direction[0].direction_id}
             value={direction[0].direction_name}
-          >
+            >
             {direction[0].direction_name}
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={(event) => {
               setLocalDirection(event.target.value);
               setDirectionObj(direction[1]);
@@ -60,9 +66,10 @@ function Directions({setDirectionLabel, directionLabel, setDirectionObj, routePa
             }}
             // id={direction[1].direction_id}
             value={direction[1].direction_name}
-          >
+            >
             {direction[1].direction_name}
-          </button>
+          </Button>
+            </Stack>
         </div>
       ) : (
         <span></span>

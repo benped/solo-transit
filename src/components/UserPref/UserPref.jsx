@@ -44,9 +44,7 @@ function UserPref({ route }) {
 
   const sendText = () => {
     dispatch({type:"TEXT_ME", payload: {
-      departure_text:arrival,
-      route_label: route.route_label,
-      direction_name: route.direction_name,
+      route: route,
       phone: 2626744046
     }})
   }

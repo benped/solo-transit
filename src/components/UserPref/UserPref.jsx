@@ -8,7 +8,7 @@ import Card from "@mui/material/Card";
 
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
+import OnlinePredictionIcon from '@mui/icons-material/OnlinePrediction';
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { blue } from "@mui/material/colors";
 
@@ -86,7 +86,7 @@ function UserPref({ route }) {
         >
           <Box>
             <Typography onClick={()=> sendText()}variant="body2" color="text.secondary">
-              Arriving: {arrival}
+              Arriving: {arrival} <OnlinePredictionIcon fontSize="small" />
             </Typography>
           </Box>
           <Button size="small" color="primary" onClick={UserPrefDetail}>

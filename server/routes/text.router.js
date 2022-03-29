@@ -5,25 +5,25 @@ const pool = require("../modules/pool");
 const { default: axios } = require("axios");
 
 require("dotenv").config();
-const accountSid = `${process.env.accountSid}`; // Your Account SID from www.twilio.com/console
+const accountSid = `AC${process.env.accountSid}`; // Your Account SID from www.twilio.com/console
 const authToken = `${process.env.authToken}`; // Your Auth Token from www.twilio.com/console
 
 const twilio = require("twilio");
 const client = new twilio(accountSid, authToken);
 
 // ================ TWILIO THAT RUNS ON CLICK ===============================================
-// router.post("/", (req, res) => {
-//   console.log("text body is", req.body.text);
-//   console.log("phone is", req.body.phone);
+router.post("/", (req, res) => {
+  console.log("text body is", req.body.text);
+  console.log("phone is", req.body.phone);
 
-//   client.messages
-//     .create({
-//       body: req.body.text,
-//       to: `+1${req.body.phone}`, // Text this number
-//       from: "+12184058150", // From a valid Twilio number
-//     })
-//     .then((message) => console.log(message.sid));
-// });
+  client.messages
+    .create({
+      body: req.body.text,
+      to: `+1${req.body.phone}`, // Text this number
+      from: "+12184058150", // From a valid Twilio number
+    })
+    .then((message) => console.log(message.sid));
+});
 
 // ================= CRON JOB RUNS EVERY 1 MINUTE ==================================
 cron.schedule("* * * * *", async () => {

@@ -5,7 +5,7 @@ const pool = require("../modules/pool");
 const { default: axios } = require("axios");
 
 require("dotenv").config();
-const accountSid = `AC${process.env.accountSid}`; // Your Account SID from www.twilio.com/console
+const accountSid = `${process.env.accountSid}`; // Your Account SID from www.twilio.com/console
 const authToken = `${process.env.authToken}`; // Your Auth Token from www.twilio.com/console
 
 const twilio = require("twilio");

@@ -28,7 +28,7 @@ if (process.env.DATABASE_URL) {
   };
 } else {
   config = {
-    database: process.env.DATABASE_NAME || 'transit_app',
+    database: process.env.DATABASE_URL || 'transit_app',
     host: 'localhost', // Server hosting the postgres database
     port: 5432, // env var: PGPORT
     database: 'transit_app', // CHANGE THIS LINE! env var: PGDATABASE, this is likely the one thing you need to change to get up and running

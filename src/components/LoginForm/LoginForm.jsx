@@ -60,6 +60,7 @@ function LoginForm() {
           </h3>
         )}
           <Box
+            onSubmit={login}
             component="form"
             sx={{
               "& > :not(style)": { m: 1, width: "25ch" },

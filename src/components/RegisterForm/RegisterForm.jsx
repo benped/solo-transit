@@ -132,7 +132,7 @@ function RegisterForm() {
             type="submit"
             name="submit"
             value="Register"
-            onClick={() => handleSubmit}
+            onClick={() => registerUser}
           >
             Register
           </Button>

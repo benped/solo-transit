@@ -20,9 +20,9 @@ function LandingPage() {
       <div className="grid">
         <div className="grid-col grid-col_8">
           <p>
-            Transit Timer is a SPA React site that fetches bus and train arrival times from the MetroTransit API and will text 
+            Transit Timer is a single-page application React site that fetches bus and train arrival times from the MetroTransit API and will text 
             you with updated route information at the time you choose. 
-
+<br/>
             This app is optimized for mobile use. 
           </p>
 

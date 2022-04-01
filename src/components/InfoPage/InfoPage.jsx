@@ -26,7 +26,7 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import ClearIcon from '@mui/icons-material/Clear';
+import ClearIcon from "@mui/icons-material/Clear";
 
 const fabStyle = {
   margin: 0,
@@ -37,14 +37,13 @@ const fabStyle = {
   position: "fixed",
 };
 
-
 function InfoPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const stops = useSelector((store) => store.stopReducer);
   const routes = useSelector((store) => store.routeReducer);
-  
+
   const [routeLabel, setRouteLabel] = useState("Route");
   const [directionLabel, setDirectionLabel] = useState("Direction");
   const [routeParam, setRouteParam] = useState("");
@@ -63,7 +62,6 @@ function InfoPage() {
 
   const [textField, setTextField] = useState(false);
   const [timeChecker, setTimeChecker] = useState(false);
-
 
   useEffect(() => {
     console.log("in useEffect");
@@ -179,72 +177,95 @@ function InfoPage() {
     <div>
       <Box
         sx={{
-          paddingLeft: 5,
+          justifyContent: "center",
+          direction: "row",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
-        <Stepper activeStep={activeStep} orientation="vertical" required>
-          {steps.map((step, index) => (
-            <Step key={step.label} >
-              <StepLabel
-                optional={
-                  index === 3 ? (
-                    <Typography variant="caption">Last step</Typography>
-                  ) : null
-                }
-              >
-                {activeStep === index ? (
-                  <Typography variant="h3">{step.label}</Typography>
-                ) : (
-                  <Typography>{step.label}</Typography>
-                )}
-              </StepLabel>
-              <StepContent>
-                {step.stepContent}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "left",
-                    alignItems: "center",
-                    marginBottom: 2,
-                    marginTop: 3
-                  }}
+        <Box
+          sx={{
+            
+            maxWidth: 450,
+          }}
+        >
+          <Stepper activeStep={activeStep} orientation="vertical" required>
+            {steps.map((step, index) => (
+              <Step key={step.label}>
+                <StepLabel
+                  optional={
+                    index === 3 ? (
+                      <Typography variant="caption">Last step</Typography>
+                    ) : null
+                  }
                 >
-                  <div>
-                    <Button
-                      disabled={next === false}
-                      variant="contained"
-                      onClick={() => {
-                        handleNext(index);
-                      }}
-                      sx={{ mt: 1, mr: 1 }}
-                    >
-                      {index === steps.length - 1 ? "Finish" : "Continue"}
-                    </Button>
-                    <Button
-                      disabled={index === 0}
-                      onClick={handleBack}
-                      sx={{ mt: 1, mr: 1 }}
-                    >
-                      Back
-                    </Button>
-                  </div>
-                </Box>
-              </StepContent>
-            </Step>
-          ))}
-        </Stepper>
-        {activeStep === steps.length && (
-          <Paper  square elevation={0} sx={{ p: 3, backgroundColor:"rgba(52, 52, 52, 0)" }}>
-            <Typography variant="h2" >Route added!</Typography>
-            <Button variant="contained" onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-              Home
-            </Button>
-          </Paper>
-        )}
+                  {activeStep === index ? (
+                    <Typography variant="h3">{step.label}</Typography>
+                  ) : (
+                    <Typography>{step.label}</Typography>
+                  )}
+                </StepLabel>
+                <StepContent>
+                  {step.stepContent}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                      marginBottom: 2,
+                      marginTop: 3,
+                    }}
+                  >
+                    <div>
+                      <Button
+                        disabled={next === false}
+                        variant="contained"
+                        onClick={() => {
+                          handleNext(index);
+                        }}
+                        sx={{ mt: 1, mr: 1 }}
+                      >
+                        {index === steps.length - 1 ? "Finish" : "Continue"}
+                      </Button>
+                      <Button
+                        disabled={index === 0}
+                        onClick={handleBack}
+                        sx={{ mt: 1, mr: 1 }}
+                      >
+                        Back
+                      </Button>
+                    </div>
+                  </Box>
+                </StepContent>
+              </Step>
+            ))}
+          </Stepper>
+          {activeStep === steps.length && (
+            <Paper
+              square
+              elevation={0}
+              sx={{ p: 3, backgroundColor: "rgba(52, 52, 52, 0)" }}
+            >
+              <Typography variant="h2">Route added!</Typography>
+              <Button
+                variant="contained"
+                onClick={handleReset}
+                sx={{ mt: 1, mr: 1 }}
+              >
+                Home
+              </Button>
+            </Paper>
+          )}
+        </Box>
       </Box>
-      <Fab sx={fabStyle} color="error" aria-label="add" >
-          <ClearIcon onClick={() => {handleReset(); history.push('/')}} />
-        </Fab>
+      <Fab sx={fabStyle} color="error" aria-label="add">
+        <ClearIcon
+          onClick={() => {
+            handleReset();
+            history.push("/");
+          }}
+        />
+      </Fab>
     </div>
   );
 }

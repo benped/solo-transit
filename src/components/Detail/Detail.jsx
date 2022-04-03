@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-function Detail() {
+function Detail( { route }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const detail = useSelector((store) => store.detailReducer);
@@ -21,6 +21,7 @@ function Detail() {
   const [email, setEmail] = useState("");
   const history = useHistory();
   let notify_mode;
+  
 
   useEffect(() => {
     dispatch({ type: "GET_DETAIL", payload: id });
@@ -64,6 +65,14 @@ function Detail() {
     dispatch({ type: "DELETE_ROUTE_PREF", payload: detail.preference_id });
     history.push("/");
   };
+
+  const sendText = () => {
+    console.log(route);
+    // dispatch({type:"TEXT_ME", payload: {
+    //   route: route,
+    //   phone: phone
+    // }})
+  }
 
   return (
     <Box
@@ -191,6 +200,9 @@ function Detail() {
               />
             )}
           </Box>
+          <Button variant="outlined" sx={{ marginBottom: 5}} onClick={()=> sendText()}>
+Test Notification 
+          </Button>
           <Button variant="contained" onClick={() => saveClicked()}>
             Save
           </Button>

@@ -3,6 +3,13 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 const { default: axios } = require("axios");
+import {
+  HashRouter as Router,
+  Routes,
+  Redirect,
+  Route,
+  Link,
+} from "react-router-dom";
 
 import Card from "@mui/material/Card";
 
@@ -38,16 +45,11 @@ function UserPref({ route }) {
     }
   };
 
-  const UserPrefDetail = () => {
-    history.push(`/detail/${route.preference_id}`); // to detail view
-  };
+  // const UserPrefDetail = () => {
+  //   history.push(`/detail/${route.preference_id}`); // to detail view
+  // };
 
-  const sendText = () => {
-    dispatch({type:"TEXT_ME", payload: {
-      route: route,
-      phone: 2626744046
-    }})
-  }
+
 
   return (
     <>
@@ -85,12 +87,14 @@ function UserPref({ route }) {
           }}
         >
           <Box>
-            <Typography onClick={()=> sendText()}variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary">
               Arriving: {arrival} <OnlinePredictionIcon fontSize="small" />
             </Typography>
           </Box>
-          <Button size="small" color="primary" onClick={UserPrefDetail}>
+          <Button size="small" color="primary" >
+            <Link route={route} to="/detail/:id">
             Edit
+            </Link>
           </Button>
         </CardActions>
       </Card>

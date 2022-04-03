@@ -47,7 +47,7 @@ This built this app to gain foundational knowledge using React, Redux, and Sagas
 ## Screenshots
 ! [Home Page with selected routes in card form](./documentation/images/HomePage.png "Home page")
 ! [Image of Adding a Route](./documentation/images/AddRoute.png "Adding a Route's notification settings")
-! [Selecting a stop from the Dropdown, inside a material UI stacker](./documentation/images/AddStop.png "Stop from the Dropdown, inside a Material UI stacker")
+! [Selecting a stop from the Dropdown, inside a material UI stacker](documentation/images/AddStop.png "Stop from the Dropdown, inside a Material UI stacker")
 ! [Screen for editing route notification details](./documentation/images/EditRoute.png "Route notification details editor")
 
 ## Reflection

@@ -6,7 +6,7 @@ _Duration: 60 hours_
 
 This built this app to gain foundational knowledge using React, Redux, and Sagas with External APIs and User Authentication. It uses the Metro Transit API to get bus and train times and deliver them at scheduled times to users via SMS using the Twilio API.  
 
-[Curently Deployed Here] (https://fast-sea-09511.herokuapp.com/)
+Curently Deployed Here: (https://fast-sea-09511.herokuapp.com/)
 
 ### Prerequisites
 
@@ -45,10 +45,9 @@ This built this app to gain foundational knowledge using React, Redux, and Sagas
 - [Twilio](https://www.twilio.com/)
 
 ## Screenshots
-! [Home Page with selected routes in card form](./documentation/images/HomePage.png "Home page")
-! [Image of Adding a Route](./documentation/images/AddRoute.png "Adding a Route's notification settings")
-! [Selecting a stop from the Dropdown, inside a material UI stacker](documentation/images/AddStop.png "Stop from the Dropdown, inside a Material UI stacker")
-! [Screen for editing route notification details](./documentation/images/EditRoute.png "Route notification details editor")
+<img src="./documentation/images/HomePage.png" width="400"> <img src="./documentation/images/AddRoute.png" width="400">
+<img src="./documentation/images/AddStop.png" width="400"> <img src="./documentation/images/EditRoute.png" width="400">
+
 
 ## Reflection
 I worked to stretch my sql knowledge to make the simplest possible request to the database to get the most databack. Particularly proud I got the route parameters to work so that I can refresh and correctly load details. 

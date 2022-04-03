@@ -15,13 +15,12 @@ function Summary({
   setNumber,
   setEmail,
   setNotify_Mode,
-  notify_mode,
   phone,
-  email
+  email,
 }) {
-  
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
+  // this is for toggling between email and text preference
   const [alignment, setAlignment] = useState("text");
 
   useEffect(() => {
@@ -29,6 +28,7 @@ function Summary({
     setNext(false);
   }, []);
 
+  // Not in use until email is built
   const deliverChange = (event, newAlignment) => {
     console.log("inside delivery change, newAlignment is", newAlignment);
     setAlignment(newAlignment);
@@ -39,78 +39,78 @@ function Summary({
 
   return (
     <>
-      <Box
-        sx={{
-          justifyContent: "left",
-          flexDirection: "column",
-          alignItems: "left",
-          marginTop: 2,
-        }}
-      >
-        <Typography marginBottom={2} variant="h6">
-          When do you want to be notified?
-        </Typography>
 
-        <input type="time" id="notify" name="notify" defaultValue={0} />
-
-        <Typography
-          marginTop={2}
-          variant="h6"
-          onClick={() => {
-            setNumber(2626744046);
-            setNext(true);
-          }}
-        >
-          Delivery
-        </Typography>
-
-        <ToggleButtonGroup
-          color="primary"
-          value={alignment}
+        <Box
           sx={{
-            paddingTop: 1,
+            justifyContent: "left",
+            flexDirection: "column",
+            alignItems: "left",
+            marginTop: 2,
           }}
-          exclusive
-          onChange={deliverChange}
         >
-          <ToggleButton value="text" disabled={alignment === "text"}>
-            SMS
-          </ToggleButton>
-          <ToggleButton value="email" disabled={alignment === "email"}>
-            Email
-          </ToggleButton>
-        </ToggleButtonGroup>
-        <Box>
-          {alignment == "text" ? (
-            <TextField
-              autoComplete="off"
-              type="number"
-              label="phone"
-              variant="standard"
-              value={phone}
-              onChange={(event) => {
-                console.log("inside phone field on change");
-                setNext(true);
-                setNumber(event.target.value);
-              }}
-            />
-          ) : (
-            <TextField
-              autoComplete="off"
-              id="standard-basic"
-              label="Email"
-              variant="standard"
-              value={email}
+          <Typography marginBottom={2} variant="h6">
+            When do you want to be notified?
+          </Typography>
 
-              onChange={(event) => {
-                console.log("inside text field on change");
-                setEmail(event.target.value);
-                setNext(true);
-              }}
-            />
-          )}
+          <input
+            type="time"
+            id="notify"
+            name="notify"
+            defaultValue={0}
+            onChange={(event) => {
+              setNext(true);
+            }}
+          />
+
+          <Typography marginTop={2} variant="h6">
+            Delivery
+          </Typography>
+
+          <ToggleButtonGroup
+            color="primary"
+            value={alignment}
+            sx={{
+              paddingTop: 1,
+            }}
+            exclusive
+            onChange={deliverChange}
+          >
+            <ToggleButton value="text" disabled={alignment === "text"}>
+              SMS
+            </ToggleButton>
+
+            {/* <ToggleButton value="email" disabled={alignment === "email"}>
+            Email
+          </ToggleButton> */}
+          </ToggleButtonGroup>
+          <Box>
+            {alignment == "text" ? (
+              <TextField
+                autoComplete="off"
+                type="number"
+                label="phone"
+                variant="standard"
+                value={phone}
+                onChange={(event) => {
+                  setNumber(event.target.value);
+                }}
+              />
+            ) : (
+              <TextField
+                autoComplete="off"
+                id="standard-basic"
+                label="Email"
+                variant="standard"
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  setNext(true);
+                }}
+              />
+            )}
+          </Box>
         </Box>
-      </Box>
+      
     </>
   );
 }

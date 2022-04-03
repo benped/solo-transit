@@ -43,7 +43,7 @@ function Directions({setDirectionLabel, directionLabel, setDirectionObj, routePa
 
       {direction.length > 0 ? (
         <div>
-          <Stack spacing={2} m={2}>
+          <Stack spacing={2} m={2} sx={{maxWidth:150}}>
 
           <Button
             onClick={(event) => {

@@ -1,0 +1,14 @@
+.about {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+a {
+    color: black;
+}
+
+ul {
+    list-style-type: none; /* Remove bullets */
+}

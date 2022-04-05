@@ -32,8 +32,8 @@ cron.schedule("* * * * *", async () => {
   try {
     // ====================== GETS ALL PREFERENCES WITHIN NEXT 5 MINUTES ==============================
     const queryText = `SELECT * FROM "user_preferences" 
-    WHERE LOCALTIME - "time" < interval '5 minute' 
-    AND LOCALTIME - "time" > interval '0 minutes';`;
+    WHERE LOCALTIME - "time" > interval '-11 minute' 
+    AND LOCALTIME - "time" < interval '0 minute';`;
 
     const response = await pool.query(queryText);
     console.log("response is", response.rows);

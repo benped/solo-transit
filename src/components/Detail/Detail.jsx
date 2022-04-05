@@ -11,27 +11,28 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-function Detail( { route }) {
+function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const detail = useSelector((store) => store.detailReducer);
-  const userRoutes = useSelector((store) => store.userRoutesReducer);
+  const userRoutes = useSelector((store) => store.userRoutesReducer);``
   const [time, setTime] = useState(detail.time);
   const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const history = useHistory();
   let notify_mode;
-  
+  // const detail = userRoutes.find((e) => e.preference_id == id);
 
   useEffect(() => {
+    dispatch({ type: "FETCH_USER_PREF" });
     dispatch({ type: "GET_DETAIL", payload: id });
     console.log("inside detail edit. detail is", detail);
     console.log("userRoutes are", userRoutes);
-    const route = userRoutes.find((e) => e.preference_id == id);
-    console.log(route);
-    setPhone(route.phone);
-    setEmail(route.email);
-    setTime(route.time);
+    // console.log(route);
+    setTime(detail.time);
+    setPhone(detail.phone);
+    // setEmail(detail.email);
+    // setTime(route.time);
   }, []);
 
   const saveClicked = () => {
@@ -46,7 +47,7 @@ function Detail( { route }) {
       email: String(email),
       notify_mode: notify_mode,
       time: time,
-      preference_id: detail.preference_id,
+      preference_id: id,
     };
     console.log("payload is", payload);
     dispatch({ type: "UPDATE_NOTIFICATIONS", payload: payload });
@@ -62,17 +63,17 @@ function Detail( { route }) {
 
   const deleteClicked = () => {
     console.log("Delete Clicked");
-    dispatch({ type: "DELETE_ROUTE_PREF", payload: detail.preference_id });
+    dispatch({ type: "DELETE_ROUTE_PREF", payload: id });
     history.push("/");
   };
 
   const sendText = () => {
-    console.log(route);
+    // console.log(route);
     // dispatch({type:"TEXT_ME", payload: {
     //   route: route,
     //   phone: phone
     // }})
-  }
+  };
 
   return (
     <Box
@@ -140,7 +141,7 @@ function Detail( { route }) {
           }}
         >
           <Typography variant="h6">Change Notification Time</Typography>
-          {/* <p>Notify At: {detail.time}</p> */}
+          <p>Notify At: {detail.time}</p>
           <input
             type="time"
             id="notify"
@@ -168,10 +169,10 @@ function Detail( { route }) {
               m: 1,
             }}
             exclusive
-            onChange={deliverChange}
+            // onChange={deliverChange}
           >
             <ToggleButton value="text">SMS</ToggleButton>
-            <ToggleButton value="email">Email</ToggleButton>
+            {/* <ToggleButton value="email">Email</ToggleButton> */}
           </ToggleButtonGroup>
           <Box
             sx={{
@@ -185,7 +186,7 @@ function Detail( { route }) {
                 label="phone"
                 variant="standard"
                 autoComplete="off"
-                value={phone}
+                defaultValue={phone}
                 onChange={(event) => setPhone(event.target.value)}
                 // onChange={() => console.log(detail)}
               />
@@ -200,8 +201,12 @@ function Detail( { route }) {
               />
             )}
           </Box>
-          <Button variant="outlined" sx={{ marginBottom: 5}} onClick={()=> sendText()}>
-Test Notification 
+          <Button
+            variant="outlined"
+            sx={{ marginBottom: 5 }}
+            onClick={() => sendText()}
+          >
+            Test Notification
           </Button>
           <Button variant="contained" onClick={() => saveClicked()}>
             Save

@@ -45,9 +45,10 @@ function UserPref({ route }) {
     }
   };
 
-  // const UserPrefDetail = () => {
-  //   history.push(`/detail/${route.preference_id}`); // to detail view
-  // };
+  const UserPrefDetail = (e) => {
+    history.push(`/detail/${e}`); // to detail view
+    // console.log(e);
+  };
 
 
 
@@ -91,10 +92,10 @@ function UserPref({ route }) {
               Arriving: {arrival} <OnlinePredictionIcon fontSize="small" />
             </Typography>
           </Box>
-          <Button size="small" color="primary" >
-            <Link route={route} to="/detail/:id">
+          <Button value={route.preference_id} size="small" color="primary" onClick={(event) => UserPrefDetail(event.target.value)}>
+            {/* <Link route= to="/detail/:id"> */}
             Edit
-            </Link>
+            {/* </Link> */}
           </Button>
         </CardActions>
       </Card>

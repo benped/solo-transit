@@ -10,29 +10,32 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Input from "@mui/material/Input";
 
-function Detail( { route }) {
+function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const detail = useSelector((store) => store.detailReducer);
   const userRoutes = useSelector((store) => store.userRoutesReducer);
+  
   const [time, setTime] = useState(detail.time);
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(detail.phone);
+  // const [email, setEmail] = useState("");
   const history = useHistory();
   let notify_mode;
+  // const detail = userRoutes.find((e) => e.preference_id == id);
   
-
   useEffect(() => {
+    dispatch({ type: "FETCH_USER_PREF" });
     dispatch({ type: "GET_DETAIL", payload: id });
     console.log("inside detail edit. detail is", detail);
     console.log("userRoutes are", userRoutes);
-    const route = userRoutes.find((e) => e.preference_id == id);
-    console.log(route);
-    setPhone(route.phone);
-    setEmail(route.email);
-    setTime(route.time);
-  }, []);
+    setTime(detail.time);
+    setPhone(detail.phone);
+    // console.log(route);
+    // setEmail(detail.email);
+    // setTime(route.time);
+  },[]);
 
   const saveClicked = () => {
     console.log("TIme is:", time);
@@ -43,10 +46,10 @@ function Detail( { route }) {
     } else notify_mode = "email";
     const payload = {
       phone: String(phone), // keeping this a number gave me out of range errors
-      email: String(email),
+      email: String(detail.email), // email is hidden for now 
       notify_mode: notify_mode,
       time: time,
-      preference_id: detail.preference_id,
+      preference_id: id,
     };
     console.log("payload is", payload);
     dispatch({ type: "UPDATE_NOTIFICATIONS", payload: payload });
@@ -62,17 +65,23 @@ function Detail( { route }) {
 
   const deleteClicked = () => {
     console.log("Delete Clicked");
-    dispatch({ type: "DELETE_ROUTE_PREF", payload: detail.preference_id });
+    dispatch({ type: "DELETE_ROUTE_PREF", payload: id });
     history.push("/");
   };
 
   const sendText = () => {
-    console.log(route);
-    // dispatch({type:"TEXT_ME", payload: {
-    //   route: route,
-    //   phone: phone
-    // }})
-  }
+    // console.log(route);
+    dispatch({type:"TEXT_ME", payload: {
+      route: {
+        route_id: detail.route_id,
+        direction_id: detail.direction_id,
+        place_code: detail.place_code,
+        description: detail.description,
+        route_label: detail.route_label
+      },
+      phone: phone
+    }})
+  };
 
   return (
     <Box
@@ -140,12 +149,12 @@ function Detail( { route }) {
           }}
         >
           <Typography variant="h6">Change Notification Time</Typography>
-          {/* <p>Notify At: {detail.time}</p> */}
+         
           <input
             type="time"
             id="notify"
             name="notify"
-            value={time}
+            defaultValue={detail.time}
             onChange={(event) => setTime(event.target.value)}
           />
         </Box>
@@ -168,10 +177,10 @@ function Detail( { route }) {
               m: 1,
             }}
             exclusive
-            onChange={deliverChange}
+            // onChange={deliverChange}
           >
             <ToggleButton value="text">SMS</ToggleButton>
-            <ToggleButton value="email">Email</ToggleButton>
+            {/* <ToggleButton value="email">Email</ToggleButton> */}
           </ToggleButtonGroup>
           <Box
             sx={{
@@ -179,16 +188,19 @@ function Detail( { route }) {
               m: 1,
             }}
           >
+
             {alignment == "text" ? (
-              <TextField
-                type="number"
-                label="phone"
-                variant="standard"
-                autoComplete="off"
-                value={phone}
-                onChange={(event) => setPhone(event.target.value)}
-                // onChange={() => console.log(detail)}
-              />
+              <Box  autoComplete="off">
+                <TextField
+                component="form"
+                  type="number"
+                  // label="phone"
+                  variant="standard"
+                  value={detail.phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                  // onChange={() => console.log(detail)}
+                />
+              </Box>
             ) : (
               <TextField
                 id="standard-basic"
@@ -200,8 +212,12 @@ function Detail( { route }) {
               />
             )}
           </Box>
-          <Button variant="outlined" sx={{ marginBottom: 5}} onClick={()=> sendText()}>
-Test Notification 
+          <Button
+            variant="outlined"
+            sx={{ marginBottom: 5 }}
+            onClick={() => sendText()}
+          >
+            Test Notification
           </Button>
           <Button variant="contained" onClick={() => saveClicked()}>
             Save

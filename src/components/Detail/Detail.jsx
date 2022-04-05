@@ -71,6 +71,9 @@ function Detail() {
 
   const sendText = () => {
     // console.log(route);
+    if (phone == null){
+      setPhone(detail.phone);
+    }
     dispatch({type:"TEXT_ME", payload: {
       route: {
         route_id: detail.route_id,
